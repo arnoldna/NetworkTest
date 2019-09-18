@@ -329,8 +329,8 @@
                                     {
                                         "service": "Microsoft.Storage",
                                         "locations": [
-                                            "usgovarizona",
-                                            "usgovtexas"
+                                            "westus",
+                                            "eastus"
                                         ]
                                     }
                                 ]
