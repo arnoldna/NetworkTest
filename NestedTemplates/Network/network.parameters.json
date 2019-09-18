@@ -1,0 +1,119 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetNames": {
+            "value": [
+                {"region": "Az", "locationName": "usgovarizona", "networkName": "EntApp2", "vnetNumber": 1, "network": 243},
+                {"region": "Vir", "locationName": "usgovvirginia","networkName": "EntApp2", "vnetNumber": 1, "network": 242}
+            ]
+        },
+        "subnetNames": {
+            "value": [
+                {"name": "Enterprise_Apps_1", "networkCIDR": "64/27"},
+                {"name": "Enterprise_Apps_2", "networkCIDR": "96/27"}
+            ]
+        },
+        "peeringList": {
+            "value": [
+                {"destinationPeeringName": "AZG-Az-InfraDMZ-VNet1", "destinationSubscriptionID": "82115170-d1a2-475f-b8d7-8518c736d8c0", "destinationResourceGroup": "Prod-Infra-Az"},
+                {"destinationPeeringName": "AZG-Vir-InfraDMZ-VNet1", "destinationSubscriptionID": "82115170-d1a2-475f-b8d7-8518c736d8c0", "destinationResourceGroup": "Prod-Infra-Vir"}
+            ]
+        },
+        "securityPeeringList": {
+            "value": [
+                {"destinationPeeringName": "AZG-Az-Security-VNet1", "destinationSubscriptionID": "82115170-d1a2-475f-b8d7-8518c736d8c0", "destinationResourceGroup": "Prod-Security-Az" },
+                {"destinationPeeringName": "AZG-Vir-Security-VNet1", "destinationSubscriptionID": "82115170-d1a2-475f-b8d7-8518c736d8c0", "destinationResourceGroup": "Prod-Security-Vir" }
+            ]
+        },
+        "nsgRuleSet": {
+            "value": [
+                {
+                    "name": "10_net",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "10.0.0.0/8",
+                        "access": "Allow",
+                        "priority": 100,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                },
+                {
+                    "name": "172_net",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "172.16.0.0/20",
+                        "access": "Allow",
+                        "priority": 110,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                },
+                {
+                    "name": "192_net",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "192.168.0.0/24",
+                        "access": "Allow",
+                        "priority": 120,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                },
+                {
+                    "name": "AzureCloud_Services",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "8080",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "AzureCloud",
+                        "access": "Allow",
+                        "priority": 130,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                },
+                {
+                    "name": "Deny_All",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "*",
+                        "access": "Deny",
+                        "priority": 1000,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                }
+            ]
+        }
+    }
+}

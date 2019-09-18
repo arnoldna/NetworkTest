@@ -1,0 +1,187 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "deploymentType": {
+        "type": "string",
+        "defaultValue": "Prod",
+        "allowedValues": [
+          "Dev",
+          "Pre Prod",
+          "Prod"
+        ],
+        "metadata": {
+          "description": "Describes scope of deployment."
+        }
+      },
+      "environmentName": {
+        "type": "string",
+        "defaultValue": "prod",
+        "allowedValues": [
+          "dev",
+          "devtest",
+          "stage",
+          "test",
+          "preprod",
+          "prod"
+        ],
+        "metadata": {
+          "description": "Describes plan's pricing tier and capacity. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
+        }
+      },
+      "_artifactsLocation": {
+        "type": "string"
+      },
+      "_artifactsLocationSasToken": {
+        "type": "securestring"
+      }
+    },
+    "variables": {
+      "templateUriNetwork": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'networkazuredeploy.json', parameters('_artifactsLocationSasToken'))]",
+      "parametersNetwork": {
+        "vnetNames": {
+            "value": [
+                {"region": "Az", "locationName": "westus", "networkName": "EntApp2", "vnetNumber": 1, "network": 243},
+                {"region": "Vir", "locationName": "eastus","networkName": "EntApp2", "vnetNumber": 1, "network": 242}
+            ]
+        },
+        "subnetNames": {
+            "value": [
+                {"name": "Enterprise_Apps_1", "networkCIDR": "64/27"},
+                {"name": "Enterprise_Apps_2", "networkCIDR": "96/27"}
+            ]
+        },
+        "peeringList": {
+            "value": [
+                {"destinationPeeringName": "AZG-Az-InfraDMZ-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-DMZ"},
+                {"destinationPeeringName": "AZG-Vir-InfraDMZ-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-DMZ"}
+            ]
+        },
+        "securityPeeringList": {
+            "value": [
+                {"destinationPeeringName": "AZG-Az-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" },
+                {"destinationPeeringName": "AZG-Vir-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" }
+            ]
+        },
+        "nsgRuleSet": {
+            "value": [
+                {
+                    "name": "10_net",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "10.0.0.0/8",
+                        "access": "Allow",
+                        "priority": 100,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                },
+                {
+                    "name": "172_net",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "172.16.0.0/20",
+                        "access": "Allow",
+                        "priority": 110,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                },
+                {
+                    "name": "192_net",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "192.168.0.0/24",
+                        "access": "Allow",
+                        "priority": 120,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                },
+                {
+                    "name": "AzureCloud_Services",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "8080",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "AzureCloud",
+                        "access": "Allow",
+                        "priority": 130,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                },
+                {
+                    "name": "Deny_All",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "*",
+                        "access": "Deny",
+                        "priority": 1000,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                }
+            ]
+        }
+      },
+      "parametersStorage": {
+      }
+    },
+    "resources": [
+      {
+        "name": "deployNetwork",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2017-05-10",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('templateUriNetwork')]"
+          },
+          "parameters": "[variables('parametersNetwork')]"
+        }
+      },
+      {
+        "name": "deployStorage",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2017-05-10",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('templateUriStorage')]"
+          },
+          "parameters": "[variables('parametersStorage')]"
+        }
+      }
+    ],
+    "outputs": {}
+  }
+  

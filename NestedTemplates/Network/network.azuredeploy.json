@@ -1,0 +1,396 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetNames": {
+            "type": "array"
+        },
+        "subnetNames": {
+            "type": "array"
+        },
+        "peeringList": {
+            "type": "array"
+        },
+        "securityPeeringList": {
+            "type": "array"
+        },
+        "nsgRuleSet": {
+            "type": "array"
+        }
+    },
+    "variables": {
+        "storageAccountNameList": {
+            "copy": [
+                {
+                    "name": "saNames",
+                    "count": "[length(parameters('vnetNames'))]",
+                    "input": {
+                        "saNamesString": "[substring(toLower(concat('azg', parameters('vnetNames')[copyIndex('saNames')].region, parameters('vnetNames')[copyIndex('saNames')].networkName, uniqueString(resourceGroup().id))),0, 19)]",
+                        "location": "[parameters('vnetNames')[copyIndex('saNames')].locationName]"
+                    }
+                }
+            ]
+        },
+        },
+        "subnetNamesList": {
+            "copy": [
+                {
+                    "name": "subnetNames",
+                    "count": "[length(parameters('subnetNames'))]",
+                    "input": {
+                        "subnetName": "[parameters('subnetNames')[copyIndex('subnetNames')].name]",
+                        "subnetCIDR": "[parameters('subnetNames')[copyIndex('subnetNames')].networkCIDR]"
+                    }
+                }
+            ]
+        },
+        "vnetNameList": {
+            "copy": [
+                {
+                    "name": "vnetNames",
+                    "count": "[length(parameters('vnetNames'))]",
+                    "input": {
+                        "vnetRegion": "[parameters('vnetNames')[copyIndex('vnetNames')].region]",
+                        "vnetLocation": "[parameters('vnetNames')[copyIndex('vnetNames')].locationName]",
+                        "vnetNetworkName": "[parameters('vnetNames')[copyIndex('vnetNames')].networkName]",
+                        "vnetNumber": "[parameters('vnetNames')[copyIndex('vnetNames')].vnetNumber]",
+                        "vnetNetwork": "[parameters('vnetNames')[copyIndex('vnetNames')].network]",
+                        "vnetName": "[concat('AZG-', parameters('vnetNames')[copyIndex('vnetNames')].region, '-', parameters('vnetNames')[copyIndex('vnetNames')].networkName, '-Vnet', parameters('vnetNames')[copyIndex('vnetNames')].vnetNumber)]",
+                        "vnetPrefix": "[concat('AZG-', parameters('vnetNames')[copyIndex('vnetNames')].region, '-', parameters('vnetNames')[copyIndex('vnetNames')].networkName)]",
+                        "NSGName": "[concat('AZG-', parameters('vnetNames')[copyIndex('vnetNames')].region, '-Master-', parameters('vnetNames')[copyIndex('vnetNames')].networkName, '-NSG1')]"
+                    }
+                }
+            ]
+        },
+        "vnetPeerList": {
+            "copy": [
+                {
+                    "name": "vnetPeers",
+                    "count": "[length(parameters('peeringlist'))]",
+                    "input": {
+                        "vnetPeerName": "[parameters('peeringlist')[copyIndex('vnetPeers')].destinationPeeringName]",
+                        "vnetPeerSubscriptionID": "[parameters('peeringlist')[copyIndex('vnetPeers')].destinationSubscriptionID]",
+                        "vnetPeerResourceGroup": "[parameters('peeringlist')[copyIndex('vnetPeers')].destinationResourceGroup]"
+                    }
+                }
+            ]
+        },
+        "securityVnetPeerList": {
+            "copy": [
+                {
+                    "name": "securityVnetPeers",
+                    "count": "[length(parameters('securityPeeringList'))]",
+                    "input": {
+                        "vnetPeerName": "[parameters('securityPeeringList')[copyIndex('securityVnetPeers')].destinationPeeringName]",
+                        "vnetPeerSubscriptionID": "[parameters('securityPeeringList')[copyIndex('securityVnetPeers')].destinationSubscriptionID]",
+                        "vnetPeerResourceGroup": "[parameters('securityPeeringList')[copyIndex('securityVnetPeers')].destinationResourceGroup]"
+                    }
+                }
+            ]
+        },
+        "NSGLogAnalyticsName": "[concat(subscription().displayName, '-NSG-LA')]",
+        "sourceSubscriptionID": "[subscription().id]",
+        "sourceResoruceGroupID": "[resourceGroup().id]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-04-01",
+            "name": "[variables('storageAccountNameList').saNames[copyIndex()].saNamesString]",
+            "location": "[variables('storageAccountNameList').saNames[copyIndex()].location]",
+            "comments": "Diagnostics storage account for NSG Flow Logs in each region where a VNet will be deployed.",
+            "copy": {
+                "name": "storageCopy",
+                "count":"[length(parameters('vnetNames'))]"
+            },
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true,
+                "encryption": {
+                    "services": {
+                        "file": {
+                            "enabled": true
+                        },
+                        "blob": {
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                },
+                "accessTier": "Cool"
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces",
+            "apiVersion": "2015-11-01-preview",
+            "name": "[variables('NSGLogAnalyticsName')]",
+            "comments": "Log Analytics workspace for NSG Flow Logs. Currently this functionality is only avaialable in the 'usgovvirginia' region. 9/16/19",
+            "location": "eastus",
+            "properties": {
+                "source": "Azure",
+                "sku": {
+                    "name": "Free"
+                },
+                "retentionInDays": 7
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-04-01",
+            "name": "[variables('vnetNameList').vnetNames[copyIndex()].NSGName]",
+            "comments": "Creation of custom network security group for each VNet. Additionally this takes into account any custom rules defined in the parameters file.",
+            "location": "[variables('vnetNameList').vnetNames[copyIndex()].vnetLocation]",
+            "tags": {
+                "displayName": "[variables('vnetNameList').vnetNames[copyIndex()].NSGName]"
+            },
+            "copy":{
+                "name": "vnetNames",
+                "count": "[length(parameters('vnetNames'))]"
+            },
+            "properties": {
+                "copy": [
+                    {
+                        "name": "securityRules",
+                        "count": "[length(parameters('nsgRuleSet'))]",
+                        "input": {
+                            "name": "[parameters('nsgRuleSet')[copyIndex('securityRules')].name]",
+                            "properties": {
+                                "protocol": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.protocol]",
+                                "sourcePortRange": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.sourcePortRange]",
+                                "destinationPortRange": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.destinationPortRange]",
+                                "sourceAddressPrefix": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.sourceAddressPrefix]",
+                                "destinationAddressPrefix": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.destinationAddressPrefix]",
+                                "access": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.access]",
+                                "priority": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.priority]",
+                                "direction": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.direction]",
+                                "sourcePortRanges": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.sourcePortRanges]",
+                                "destinationPortRanges": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.destinationPortRanges]",
+                                "sourceAddressPrefixes": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.sourceAddressPrefixes]",
+                                "destinationAddressPrefixes": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.destinationAddressPrefixes]"
+                            }
+                        }
+                    }
+                ],
+                "defaultSecurityRules": [
+                    {
+                        "name": "AllowVnetInBound",
+                        "properties": {
+                            "description": "Allow inbound traffic from all VMs in VNET",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "VirtualNetwork",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": 65000,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "AllowAzureLoadBalancerInBound",
+                        "properties": {
+                            "description": "Allow inbound traffic from azure load balancer",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "AzureLoadBalancer",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 65001,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "DenyAllInBound",
+                        "properties": {
+                            "description": "Deny all inbound traffic",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Deny",
+                            "priority": 65500,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "AllowVnetOutBound",
+                        "properties": {
+                            "description": "Allow outbound traffic from all VMs to all VMs in VNET",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "VirtualNetwork",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": 65000,
+                            "direction": "Outbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "AllowInternetOutBound",
+                        "properties": {
+                            "description": "Allow outbound traffic from all VMs to Internet",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "Internet",
+                            "access": "Allow",
+                            "priority": 65001,
+                            "direction": "Outbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "DenyAllOutBound",
+                        "properties": {
+                            "description": "Deny all outbound traffic",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Deny",
+                            "priority": 65500,
+                            "direction": "Outbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2019-04-01",
+            "name": "[variables('vnetNameList').vnetNames[copyIndex()].vnetName]",
+            "comments": "Creation of VNets and appropriate subnets in each region, and the assignment of appropriate network security group.",
+            "location": "[variables('vnetNameList').vnetNames[copyIndex()].vnetLocation]",
+            "tags": {
+                "displayName": "[variables('vnetNameList').vnetNames[copyIndex()].vnetName]"
+            },
+            "copy":{
+                "name": "vnetNames",
+                "count": "[length(parameters('vnetNames'))]"
+            },
+            "dependsOn": [
+                "[variables('vnetNameList').vnetNames[copyIndex()].NSGName]" 
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[concat('10.', variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, '.32.0/20')]"
+                    ]
+                },
+                "copy": [
+                    {
+                        "name": "subnets",
+                        "count": "[length(parameters('vnetNames'))]",
+                        "input": {
+                            "name": "[variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName]",
+                            "properties": {
+                                "addressPrefix": "[concat('10.',variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, '.32.', variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR)]",
+                                "networkSecurityGroup": {
+                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('vnetNameList').vnetNames[copyIndex()].NSGName)]"
+                                },
+                                "serviceEndpoints": [
+                                    {
+                                        "service": "Microsoft.Storage",
+                                        "locations": [
+                                            "usgovarizona",
+                                            "usgovtexas"
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "apiVersion": "2019-04-01",
+            "name": "[concat(variables('vnetNameList').vnetNames[copyIndex()].vnetName, '/ProdDMZ')]",
+            "location": "[resourceGroup().location]",
+            "comments": "Initiate network pereing to the ProdDMZ netowrk. To complete the peer a separate deployment will need to be setup on in the ProdDMZ subcription.",
+            "copy":{
+                "name": "vnetNames",
+                "count": "[length(parameters('vnetNames'))]"
+            },
+            "dependsOn": [
+                "[variables('vnetNameList').vnetNames[copyIndex()].vnetName]"
+            ],
+            "properties": {
+                "peeringState": "Initiated",
+                "remoteVirtualNetwork": {
+                    "id": "[resourceID(variables('vnetPeerList').vnetPeers[copyIndex()].vnetPeerSubscriptionID,variables('vnetPeerList').vnetPeers[copyIndex()].vnetPeerResourceGroup, 'Microsoft.Network/virtualNetworks', variables('vnetPeerList').vnetPeers[copyIndex()].vnetPeerName)]"
+                },
+                "allowVirtualNetworkAccess": true,
+                "allowForwardedTraffic": true,
+                "allowGatewayTransit": true,
+                "useRemoteGateways": false
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "apiVersion": "2019-04-01",
+            "name": "[concat(variables('vnetNameList').vnetNames[copyIndex()].vnetName, '/Security')]",
+            "location": "[resourceGroup().location]",
+            "comments": "Initiate network pereing to the SECURITY network. To complete the peer a separate deployment will need to be setup on in the Security subcription.",
+            "copy":{
+                "name": "vnetNames",
+                "count": "[length(parameters('vnetNames'))]"
+            },
+            "dependsOn": [
+                "[variables('vnetNameList').vnetNames[copyIndex()].vnetName]"
+            ],
+            "properties": {
+                "peeringState": "Initiated",
+                "remoteVirtualNetwork": {
+                    "id": "[resourceID(variables('securityVnetPeerList').securityVnetPeers[copyIndex()].vnetPeerSubscriptionID, variables('securityVnetPeerList').securityVnetPeers[copyIndex()].vnetPeerResourceGroup, 'Microsoft.Network/virtualNetworks', variables('securityVnetPeerList').securityVnetPeers[copyIndex()].vnetPeerName)]"
+                },
+                "allowVirtualNetworkAccess": true,
+                "allowForwardedTraffic": true,
+                "allowGatewayTransit": true,
+                "useRemoteGateways": false
+            }
+        }
+    ],
+    "outputs": {
+
+    }
+}
