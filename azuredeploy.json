@@ -175,7 +175,7 @@
     "outputs": {
       "parentRG": {
         "type": "object",
-        "value": "[resourceGroup()]"
+        "value": "[subscription()]"
       }
     }
   }
