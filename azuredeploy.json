@@ -31,7 +31,7 @@
       },
       "_artifactsLocation": {
         "type": "string",
-        "defaultValue": "https://raw.githubusercontent.com/arnoldna/NetworkTest/user/arnoldna/DevTest/azuredeploy.json"
+        "defaultValue": "https://raw.githubusercontent.com/arnoldna/NetworkTest/user/arnoldna/DevTest"
       },
       "_artifactsLocationSasToken": {
         "type": "securestring"
