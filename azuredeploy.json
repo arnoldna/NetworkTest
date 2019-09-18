@@ -34,7 +34,8 @@
         "defaultValue": "https://raw.githubusercontent.com/arnoldna/NetworkTest/user/arnoldna/DevTest"
       },
       "_artifactsLocationSasToken": {
-        "type": "securestring"
+        "type": "string",
+        "defaultValue": "ACTEYPJKXJA4A4DW3Z626HS5QJMQM"
       }
     },
     "variables": {
