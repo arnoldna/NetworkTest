@@ -219,11 +219,15 @@
                                     {
                                         "service": "Microsoft.Storage",
                                         "locations": [
+                                            "westus",
+                                            "eastus"
                                         ]
                                     },
                                     {
                                         "service": "Microsoft.KeyVault",
                                         "locations": [
+                                            "westus",
+                                            "eastus"
                                         ]
                                     }
                                 ]
