@@ -87,7 +87,7 @@
                 }
             ]
         },
-        "NSGLogAnalyticsName": "[concat('Nate', '-NSG-LA')]",
+        "NSGLogAnalyticsName": "[concat('nate', '-NSG-LA')]",
         "sourceSubscriptionID": "[subscription().id]",
         "sourceResoruceGroupID": "[resourceGroup().id]"
     },
