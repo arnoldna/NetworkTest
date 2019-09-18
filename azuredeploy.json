@@ -30,10 +30,10 @@
         }
       },
       "_artifactsLocation": {
-        "type": "string"
+        "type": "https://raw.githubusercontent.com/arnoldna/NetworkTest/user/arnoldna/DevTest/azuredeploy.json"
       },
       "_artifactsLocationSasToken": {
-        "type": "securestring"
+        "type": "ACTEYPIQP4C3FGVDUW7M4W25QJJ34"
       }
     },
     "variables": {
