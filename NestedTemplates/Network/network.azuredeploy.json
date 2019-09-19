@@ -252,7 +252,7 @@
                 "count": "[length(parameters('vnetNames'))]"
             },
             "properties": {
-                "securityRules": "[variables('customNSGRules')]"
+                "securityRules": "[variables('customNSGRules')[copyIndex()].securityRules]"
             }
         },
         {
