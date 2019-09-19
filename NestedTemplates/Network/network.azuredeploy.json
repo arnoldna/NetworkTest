@@ -239,7 +239,7 @@
                 "count": "[length(parameters('vnetNames'))]"
             },
             "properties": {
-                "securityRules": "[concat(variables('defaultSecurityRules'), variables('subnetNamesList')[copyIndex('nsgCopyRules')].nsgRuleSet)]"
+                "securityRules": "[concat(variables('defaultSecurityRules'), variables('subnetNamesList')[copyIndex('')].nsgRuleSet)]"
             }
         },
         {
