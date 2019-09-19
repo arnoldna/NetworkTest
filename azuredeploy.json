@@ -69,7 +69,25 @@
                   }
                   ]
                 },
-                {"name": "Enterprise_Apps_2", "networkCIDR": "96/27", "nsgRuleSet": []}
+                {"name": "Enterprise_Apps_2", "networkCIDR": "96/27", "nsgRuleSet": [
+                  {
+                    "name": "Test",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "8080",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "*",
+                        "access": "Allow",
+                        "priority": 104,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                  }
+                ]}
             ]
         },
         "peeringList": {
