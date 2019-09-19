@@ -171,9 +171,7 @@
                 }
             ]
         },
-        "NSGLogAnalyticsName": "[replace(concat(subscription().displayName, '-NSG-LA'),' ', '-')]",
-        "sourceSubscriptionID": "[subscription().id]",
-        "sourceResoruceGroupID": "[resourceGroup().id]"
+        "NSGLogAnalyticsName": "[replace(concat(subscription().displayName, '-NSG-LA'),' ', '-')]"
     },
     "resources": [
         {

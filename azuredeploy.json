@@ -49,7 +49,7 @@
         },
         "subnetNames": {
             "value": [
-                {"name": "Enterprise_Apps_1", "networkCIDR": "64/27", "nsgRuleSet": 
+                {"name": "Enterprise-Apps-1", "networkCIDR": "64/27", "nsgRuleSet": 
                   {
                     "name": "Port_8080",
                     "properties": {
@@ -68,7 +68,7 @@
                     }
                   }
                 },
-                {"name": "Enterprise_Apps_2", "networkCIDR": "96/27", "nsgRuleSet": 
+                {"name": "Enterprise-Apps-2", "networkCIDR": "96/27", "nsgRuleSet": 
                   {
                     "name": "Test",
                     "properties": {
