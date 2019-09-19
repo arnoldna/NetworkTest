@@ -287,7 +287,7 @@
                             "properties": {
                                 "addressPrefix": "[concat('10.',variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, '.32.', variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR)]",
                                 "networkSecurityGroup": {
-                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('vnetNameList').vnetNames[copyIndex()].NSGName)]"
+                                    "id": "[concat(variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-NSG')]"
                                 },
                                 "serviceEndpoints": [
                                     {
