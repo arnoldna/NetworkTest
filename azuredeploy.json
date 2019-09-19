@@ -69,7 +69,7 @@
                   }
                   ]
                 },
-                {"name": "Enterprise_Apps_2", "networkCIDR": "96/27"}
+                {"name": "Enterprise_Apps_2", "networkCIDR": "96/27", "nsgRuleSet": []}
             ]
         },
         "peeringList": {
