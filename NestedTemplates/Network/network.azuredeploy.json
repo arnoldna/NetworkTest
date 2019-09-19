@@ -141,7 +141,7 @@
                         "vnetNetwork": "[parameters('vnetNames')[copyIndex('vnetNames')].network]",
                         "vnetName": "[concat('AZG-', parameters('vnetNames')[copyIndex('vnetNames')].region, '-', parameters('vnetNames')[copyIndex('vnetNames')].networkName, '-Vnet', parameters('vnetNames')[copyIndex('vnetNames')].vnetNumber)]",
                         "vnetPrefix": "[concat('AZG-', parameters('vnetNames')[copyIndex('vnetNames')].region, '-', parameters('vnetNames')[copyIndex('vnetNames')].networkName)]",
-                        "NSGName": "[concat('AZG-', parameters('vnetNames')[copyIndex('vnetNames')].region, '-Master-', parameters('vnetNames')[copyIndex('vnetNames')].networkName, '-NSG1')]"
+                        "NSGName": "[concat('AZG-', parameters('vnetNames')[copyIndex('vnetNames')].region, '-Master-', parameters('vnetNames')[copyIndex('vnetNames')].networkName, '-NSG')]"
                     }
                 }
             ]
