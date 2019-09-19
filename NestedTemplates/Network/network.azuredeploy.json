@@ -13,9 +13,6 @@
         },
         "securityPeeringList": {
             "type": "array"
-        },
-        "nsgRuleSet": {
-            "type": "array"
         }
     },
     "variables": {
@@ -106,7 +103,17 @@
                 }
             }
         ],
-        "customNSGRules": "[concat(variables('defaultSecurityRules'), parameters('nsgRuleSet'))]",
+        "customNSGRules": {
+            "copy": [
+                {
+                    "name": "nsgCopyRules",
+                    "count": "[length(parameters('subnetNames'))]",
+                    "input": {
+                        "securityRules": "[concat(variables('defaultSecurityRules'), parameters('subnetNames')[copyIndex('nsgCopyRules')].nsgRuleSet)]"
+                    }
+                }
+            ]
+        },
         "storageAccountNameList": {
             "copy": [
                 {

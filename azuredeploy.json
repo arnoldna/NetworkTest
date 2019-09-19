@@ -49,7 +49,26 @@
         },
         "subnetNames": {
             "value": [
-                {"name": "Enterprise_Apps_1", "networkCIDR": "64/27"},
+                {"name": "Enterprise_Apps_1", "networkCIDR": "64/27", "nsgRuleSet": [
+                  {
+                    "name": "Port_8080",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "8080",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "*",
+                        "access": "Allow",
+                        "priority": 104,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                  }
+                  ]
+                },
                 {"name": "Enterprise_Apps_2", "networkCIDR": "96/27"}
             ]
         },
@@ -63,27 +82,6 @@
             "value": [
                 {"destinationPeeringName": "AZG-Az-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" },
                 {"destinationPeeringName": "AZG-Vir-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" }
-            ]
-        },
-        "nsgRuleSet": {
-            "value": [
-              {
-                "name": "Port_8080",
-                "properties": {
-                    "protocol": "*",
-                    "sourcePortRange": "*",
-                    "destinationPortRange": "8080",
-                    "sourceAddressPrefix": "*",
-                    "destinationAddressPrefix": "*",
-                    "access": "Allow",
-                    "priority": 104,
-                    "direction": "Outbound",
-                    "sourcePortRanges": [],
-                    "destinationPortRanges": [],
-                    "sourceAddressPrefixes": [],
-                    "destinationAddressPrefixes": []
-                }
-            }
             ]
         }
       },
