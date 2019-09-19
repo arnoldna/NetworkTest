@@ -103,17 +103,6 @@
                 }
             }
         ],
-        "customNSGRules": {
-            "copy": [
-                {
-                    "name": "nsgCopyRules",
-                    "count": "[length(parameters('subnetNames'))]",
-                    "input": {
-                        "securityRules": "[concat(variables('defaultSecurityRules'), variables('subnetNamesList')[copyIndex('nsgCopyRules')].nsgRuleSet)]"
-                    }
-                }
-            ]
-        },
         "storageAccountNameList": {
             "copy": [
                 {
@@ -253,7 +242,7 @@
                 "count": "[length(parameters('vnetNames'))]"
             },
             "properties": {
-                "securityRules": "[variables('customNSGRules')[copyIndex()].securityRules]"
+                "securityRules": "[concat(variables('defaultSecurityRules'), variables('subnetNamesList')[copyIndex('nsgCopyRules')].nsgRuleSet)]"
             }
         },
         {
