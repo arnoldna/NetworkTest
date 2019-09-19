@@ -109,7 +109,7 @@
                     "name": "nsgCopyRules",
                     "count": "[length(parameters('subnetNames'))]",
                     "input": {
-                        "securityRules": "[concat(variables('defaultSecurityRules'), parameters('subnetNames')[copyIndex('nsgCopyRules')].nsgRuleSet)]"
+                        "securityRules": "[concat(variables('defaultSecurityRules'), variables('subnetNamesList')[copyIndex('nsgCopyRules')].nsgRuleSet)]"
                     }
                 }
             ]
@@ -242,11 +242,11 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-04-01",
-            "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-NSG')]",
+            "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-NSG')]",
             "comments": "Creation of custom network security group for each VNet. Additionally this takes into account any custom rules defined in the parameters file.",
             "location": "[variables('vnetNameList').vnetNames[copyIndex()].vnetLocation]",
             "tags": {
-                "displayName": "[variables('vnetNameList').vnetNames[copyIndex()].NSGName]"
+                "displayName": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-NSG')]"
             },
             "copy":{
                 "name": "vnetNames",
@@ -287,7 +287,7 @@
                             "properties": {
                                 "addressPrefix": "[concat('10.',variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, '.32.', variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR)]",
                                 "networkSecurityGroup": {
-                                    "id": "[concat(variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-NSG')]"
+                                    "id": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-NSG')]"
                                 },
                                 "serviceEndpoints": [
                                     {
