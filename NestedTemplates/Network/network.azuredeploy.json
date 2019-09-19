@@ -16,9 +16,101 @@
         },
         "nsgRuleSet": {
             "type": "array"
+        },
+        "defaultSecurityRules":{
+            "type":"array",
+            "defaultValue": [
+                {
+                    "name": "10_net",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "10.0.0.0/8",
+                        "access": "Allow",
+                        "priority": 100,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                },
+                {
+                    "name": "172_net",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "172.16.0.0/20",
+                        "access": "Allow",
+                        "priority": 110,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                },
+                {
+                    "name": "192_net",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "192.168.0.0/24",
+                        "access": "Allow",
+                        "priority": 120,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                },
+                {
+                    "name": "AzureCloud_Services",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "8080",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "AzureCloud",
+                        "access": "Allow",
+                        "priority": 130,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                },
+                {
+                    "name": "Deny_All",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "*",
+                        "access": "Deny",
+                        "priority": 1000,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                }
+            ]
         }
     },
     "variables": {
+        "customNSGRules": "[concat(parameters('defaultSecurityRules'), parameters('nsgRuleSet'))]"
+        ,
         "storageAccountNameList": {
             "copy": [
                 {
@@ -157,116 +249,7 @@
                 "count": "[length(parameters('vnetNames'))]"
             },
             "properties": {
-                "copy": [
-                    {
-                        "name": "securityRules",
-                        "count": "[length(parameters('nsgRuleSet'))]",
-                        "input": {
-                            "name": "[parameters('nsgRuleSet')[copyIndex('securityRules')].name]",
-                            "properties": {
-                                "protocol": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.protocol]",
-                                "sourcePortRange": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.sourcePortRange]",
-                                "destinationPortRange": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.destinationPortRange]",
-                                "sourceAddressPrefix": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.sourceAddressPrefix]",
-                                "destinationAddressPrefix": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.destinationAddressPrefix]",
-                                "access": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.access]",
-                                "priority": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.priority]",
-                                "direction": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.direction]",
-                                "sourcePortRanges": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.sourcePortRanges]",
-                                "destinationPortRanges": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.destinationPortRanges]",
-                                "sourceAddressPrefixes": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.sourceAddressPrefixes]",
-                                "destinationAddressPrefixes": "[parameters('nsgRuleSet')[copyIndex('securityRules')].properties.destinationAddressPrefixes]"
-                            }
-                        }
-                    }
-                ],
-                "defaultSecurityRules":[
-                    {
-                        "name": "10_net",
-                        "properties": {
-                            "protocol": "*",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "*",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "10.0.0.0/8",
-                            "access": "Allow",
-                            "priority": 100,
-                            "direction": "Outbound",
-                            "sourcePortRanges": [],
-                            "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [],
-                            "destinationAddressPrefixes": []
-                        }
-                    },
-                    {
-                        "name": "172_net",
-                        "properties": {
-                            "protocol": "*",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "*",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "172.16.0.0/20",
-                            "access": "Allow",
-                            "priority": 110,
-                            "direction": "Outbound",
-                            "sourcePortRanges": [],
-                            "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [],
-                            "destinationAddressPrefixes": []
-                        }
-                    },
-                    {
-                        "name": "192_net",
-                        "properties": {
-                            "protocol": "*",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "*",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "192.168.0.0/24",
-                            "access": "Allow",
-                            "priority": 120,
-                            "direction": "Outbound",
-                            "sourcePortRanges": [],
-                            "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [],
-                            "destinationAddressPrefixes": []
-                        }
-                    },
-                    {
-                        "name": "AzureCloud_Services",
-                        "properties": {
-                            "protocol": "*",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "8080",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "AzureCloud",
-                            "access": "Allow",
-                            "priority": 130,
-                            "direction": "Outbound",
-                            "sourcePortRanges": [],
-                            "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [],
-                            "destinationAddressPrefixes": []
-                        }
-                    },
-                    {
-                        "name": "Deny_All",
-                        "properties": {
-                            "protocol": "*",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "*",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Deny",
-                            "priority": 1000,
-                            "direction": "Outbound",
-                            "sourcePortRanges": [],
-                            "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [],
-                            "destinationAddressPrefixes": []
-                        }
-                    }
-                ]
+                "securityRules": "[variables('customNSGRules')]"
             }
         },
         {
