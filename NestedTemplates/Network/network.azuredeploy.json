@@ -232,7 +232,7 @@
             "comments": "Creation of custom network security group for each VNet. Additionally this takes into account any custom rules defined in the parameters file.",
             "location": "[variables('vnetNameList').vnetNames[copyIndex()].vnetLocation]",
             "tags": {
-                "displayName": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-NSG')]"
+                "displayName": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-', variables('vnetNameList').vnetNames[copyIndex()].vnetRegion, '-NSG')]"
             },
             "copy":{
                 "name": "vnetNames",
