@@ -235,7 +235,7 @@
                 "displayName": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-NSG-', variables('vnetNameList').vnetNames[copyIndex()].vnetRegion)]"
             },
             "copy":{
-                "name": "vnetNames",
+                "name": "subnets",
                 "count": "[mul(length(parameters('subnetNames')),2)]"
             },
             "properties": {
