@@ -236,7 +236,7 @@
             },
             "copy":{
                 "name": "vnetNames",
-                "count": "[length(mod(parameters('subnetNames'),2))]"
+                "count": "[mod(length(parameters('subnetNames')),2)]"
             },
             "properties": {
                 "securityRules": "[variables('defaultSecurityRules')]"
