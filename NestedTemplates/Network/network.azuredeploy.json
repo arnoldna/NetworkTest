@@ -267,7 +267,7 @@
                 "copy": [
                     {
                         "name": "subnets",
-                        "count": "[length(parameters('subnetNames'))]",
+                        "count": "[length(parameters('vnetNames'))]",
                         "input": {
                             "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-SN')]",
                             "properties": {
