@@ -236,7 +236,7 @@
             },
             "copy":{
                 "name": "vnetNames",
-                "count": "[length(parameters('vnetNames'))]"
+                "count": "[length(mul(parameters('subnetNames'), 2))]"
             },
             "properties": {
                 "securityRules": "[variables('defaultSecurityRules')]"
@@ -267,7 +267,7 @@
                 "copy": [
                     {
                         "name": "subnets",
-                        "count": "[length(parameters('subnetNames'))]",
+                        "count": "[length(mul(parameters('subnetNames'), 2))]",
                         "input": {
                             "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-', variables('vnetNameList').vnetNames[copyIndex()].vnetRegion)]",
                             "properties": {
