@@ -270,7 +270,7 @@
                         "input": {
                             "name": "[variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName]",
                             "properties": {
-                                "addressPrefix": "[variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR]",
+                                "addressPrefix": "[concat('10.',variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, '.32.', variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR)]",
                                 "networkSecurityGroup": {
                                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-NSG'))]"
                                 },
