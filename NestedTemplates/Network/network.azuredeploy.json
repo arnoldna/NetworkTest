@@ -269,11 +269,11 @@
                         "name": "subnets",
                         "count": "[length(parameters('subnetNames'))]",
                         "input": {
-                            "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-SN')]",
+                            "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-SN')]",
                             "properties": {
                                 "addressPrefix": "[concat('10.',variables('vnetNameList').vnetNames[copyIndex()].vnetNetworkOctet, '.32.', variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR)]",
                                 "networkSecurityGroup": {
-                                    
+                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-NSG'))]"
                                 },
                                 "serviceEndpoints": [
                                     {
