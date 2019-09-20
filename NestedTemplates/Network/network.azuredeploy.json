@@ -266,13 +266,13 @@
                 "copy": [
                     {
                         "name": "subnets",
-                        "count": "[length(parameters('vnetNames'))]",
+                        "count": "[length(parameters('subnetNames'))]",
                         "input": {
                             "name": "[variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName]",
                             "properties": {
                                 "addressPrefix": "[variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR]",
                                 "networkSecurityGroup": {
-                                    "id": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-NSG')]"
+                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-NSG'))]"
                                 },
                                 "serviceEndpoints": [
                                     {
