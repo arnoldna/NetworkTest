@@ -256,7 +256,7 @@
                 "count": "[length(parameters('vnetNames'))]"
             },
             "dependsOn": [
-                "[concat(variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-NSG-', variables('vnetNameList').vnetNames[copyIndex()].vnetRegion)]"
+                "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-NSG-', variables('vnetNameList').vnetNames[copyIndex()].vnetRegion)]"
             ],
             "properties": {
                 "addressSpace": {
