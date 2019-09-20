@@ -43,16 +43,52 @@
       "parametersNetwork": {
         "vnetNames": {
             "value": [
-                {"region": "Az", "locationName": "westus", "networkName": "EntApp2", "vnetNumber": 1, "network": "10.243.32.0/20"},
-                {"region": "Vir", "locationName": "eastus","networkName": "EntApp2", "vnetNumber": 1, "network": "10.242.32.0/20"}
+                {"region": "Az", "locationName": "westus", "networkName": "EntApp2", "vnetNumber": 1, "network": 243},
+                {"region": "Vir", "locationName": "eastus","networkName": "EntApp2", "vnetNumber": 1, "network": 242}
             ]
         },
         "subnetNames": {
             "value": [
-                {"name": "Enterprise-Apps-1", "networkCIDR": "10.243.32.64/27"},
-                {"name": "Enterprise-Apps-2", "networkCIDR": "10.243.32.96/27"}
+                {"name": "Enterprise-Apps-1", "networkCIDR": "64/27", "nsgRuleSet": 
+                  {
+                    "name": "Port_8080",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "8080",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "*",
+                        "access": "Allow",
+                        "priority": 104,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                  }
+                },
+                {"name": "Enterprise-Apps-2", "networkCIDR": "96/27", "nsgRuleSet": 
+                  {
+                    "name": "Test",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "8080",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "*",
+                        "access": "Allow",
+                        "priority": 104,
+                        "direction": "Outbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                  }
+                }
             ]
-          },
+        },
         "peeringList": {
             "value": [
                 {"destinationPeeringName": "AZG-Az-InfraDMZ-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-DMZ"},
@@ -81,7 +117,23 @@
           },
           "parameters": "[variables('parametersNetwork')]"
         }
-      }
+      },
+      {
+        "apiVersion": "2017-05-10",
+        "name": "peerNetworkProdInfra",
+        "type": "Microsoft.Resources/deployments",
+        "comments": "----- Peering from ProdInfra ------",
+        "resourceGroup": "linkedGroup",
+        "subscriptionId": "cff004d9-5989-432e-8801-bd8539bf7ee4",
+        "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+                "contentVersion": "1.0.0.0",
+                "uri": "https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/azure-resource-manager/functions/resourcegroup.json"
+            },
+            "parameters": {}
+        }
+    }
     ],
     "outputs": {
       "parentRG": {

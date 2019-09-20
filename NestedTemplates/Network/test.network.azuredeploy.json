@@ -122,7 +122,8 @@
                     "count": "[length(parameters('subnetNames'))]",
                     "input": {
                         "subnetName": "[parameters('subnetNames')[copyIndex('subnetNames')].name]",
-                        "subnetCIDR": "[parameters('subnetNames')[copyIndex('subnetNames')].networkCIDR]"
+                        "subnetCIDR": "[parameters('subnetNames')[copyIndex('subnetNames')].networkCIDR]",
+                        "nsgRuleSet": "[parameters('subnetNames')[copyIndex('subnetNames')].nsgRuleSet]"
                     }
                 }
             ]
@@ -238,7 +239,7 @@
                 "count": "[length(parameters('vnetNames'))]"
             },
             "properties": {
-                "securityRules": "[variables('defaultSecurityRules')]"
+                "securityRules": "[concat(variables('defaultSecurityRules'), variables('subnetNamesList')[copyIndex('')].nsgRuleSet)]"
             }
         },
         {
@@ -260,7 +261,7 @@
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "[variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork]"
+                        "[concat('10.', variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, '.32.0/20')]"
                     ]
                 },
                 "copy": [
@@ -270,7 +271,7 @@
                         "input": {
                             "name": "[variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName]",
                             "properties": {
-                                "addressPrefix": "[variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR]",
+                                "addressPrefix": "[concat('10.',variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, '.32.', variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR)]",
                                 "networkSecurityGroup": {
                                     "id": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-NSG')]"
                                 },
