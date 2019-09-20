@@ -43,8 +43,8 @@
       "parametersNetwork": {
         "vnetNames": {
             "value": [
-                {"region": "Az", "locationName": "westus", "networkName": "EntApp2", "vnetNumber": 1, "ventNetwork": "243", "network": "10.243.32.0/20"},
-                {"region": "Vir", "locationName": "eastus","networkName": "EntApp2", "vnetNumber": 1, "ventNetwork": "242", "network": "10.242.32.0/20"}
+                {"region": "Az", "locationName": "westus", "networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "243", "network": "10.243.32.0/20"},
+                {"region": "Vir", "locationName": "eastus","networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "242", "network": "10.242.32.0/20"}
             ]
         },
         "subnetNames": {
