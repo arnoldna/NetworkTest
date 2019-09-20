@@ -228,7 +228,7 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-04-01",
-            "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-NSG')]",
+            "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-', variables('vnetNameList').vnetNames[copyIndex()].ventRegion, '-NSG')]",
             "comments": "Creation of custom network security group for each VNet. Additionally this takes into account any custom rules defined in the parameters file.",
             "location": "[variables('vnetNameList').vnetNames[copyIndex()].vnetLocation]",
             "tags": {
@@ -269,7 +269,7 @@
                         "name": "subnets",
                         "count": "[length(parameters('subnetNames'))]",
                         "input": {
-                            "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-', variables('vnetNameList').vnetNames[copyIndex()].vnetLocation)]",
+                            "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-', variables('vnetNameList').vnetNames[copyIndex()].ventRegion)]",
                             "properties": {
                                 "addressPrefix": "[concat('10.',variables('vnetNameList').vnetNames[copyIndex()].vnetNetworkOctet, '.32.', variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR)]",
                                 "networkSecurityGroup": {
