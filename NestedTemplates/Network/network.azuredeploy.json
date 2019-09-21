@@ -225,7 +225,6 @@
                 "retentionInDays": 7
             }
         },
-        
         {
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2019-04-01",
@@ -256,9 +255,6 @@
                             "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-SN')]",
                             "properties": {
                                 "addressPrefix": "[concat('10.',variables('vnetNameList').vnetNames[copyIndex()].vnetNetworkOctet, '.32.', variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR)]",
-                                "networkSecurityGroup": {
-                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(variables('subnetNamesList').subnetNames[copyIndex('')].subnetName, '-NSG'))]"
-                                },
                                 "serviceEndpoints": [
                                     {
                                         "service": "Microsoft.Storage",
