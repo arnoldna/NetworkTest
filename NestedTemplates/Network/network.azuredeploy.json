@@ -150,7 +150,7 @@
                     "name": "subnetRegionList",
                     "count": 4,
                     "input": {
-                        "subnetRegionName": "[concat(parameters('subnetNames')[copyIndex('subnetRegionList')].subnetName, '-',variables('ventNames')[copyIndex()].region)]"
+                        "subnetRegionName": "[concat(parameters('subnetNames')[copyIndex()].subnetName, '-',variables('ventNames')[copyIndex()].region)]"
                     }
                 }
             ]
