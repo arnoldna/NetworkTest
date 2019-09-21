@@ -145,17 +145,16 @@
                 }
             ]
         },
-        "subnetRegionGroupList": {
             "copy": [
                 {
                     "name": "subnetRegionList",
                     "count": 4,
                     "input": {
-                        "subnetRegionName": "[concat(variables('subnetNames')[copyIndex('subnetRegionList')].subnetName, '-',variables('ventNames')[copyIndex()].region)]"
+                        "subnetRegionName": "[concat(parameters('subnetNames')[copyIndex('subnetRegionList')].subnetName, '-',variables('ventNames')[copyIndex()].region)]"
                     }
                 }
             ]
-        },
+,
         "vnetPeerList": {
             "copy": [
                 {
