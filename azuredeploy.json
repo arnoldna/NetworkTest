@@ -92,7 +92,12 @@
           "templateLink": {
             "uri": "[variables('templateUriNetwork')]"
           },
-          "parameters": "[variables('parametersNetwork')]"
+          "parameters": {
+            "networkParams" :"[variables('parametersNetwork')]",
+            "nsgId": {
+              "value": "[resourceId('Microsoft.Network/networkSecurityGroups', 'deployNSG')]"
+            }
+          }
         }
       }
     ],
