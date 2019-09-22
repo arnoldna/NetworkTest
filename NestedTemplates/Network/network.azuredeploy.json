@@ -5,6 +5,9 @@
         "state": {
             "type": "array"
         },
+        "subnetList": {
+            "type": "array"
+        },
         "vnetNames": {
             "type": "array"
         },
@@ -329,6 +332,9 @@
         }
     ],
     "outputs": {
-
+        "state": {
+            "type": "array",
+            "value": "[concat(parameters('state'), array(variables('subnetNamesList')))]"
+        }
     }
 }
