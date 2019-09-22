@@ -2,34 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "vnetNames": {
-        "type":"array",
-        "defalutValue": [
-            {"region": "Az", "locationName": "westus", "networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "243", "network": "10.243.32.0/20"},
-            {"region": "Vir", "locationName": "eastus","networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "242", "network": "10.242.32.0/20"}
-          ]
-      },
-      "subnetNames": {
-        "type":"array",
-          "defalutValue": [
-              {"name": "Enterprise-Apps-1", "networkCIDR": "64/27"},
-              {"name": "Enterprise-Apps-2", "networkCIDR": "96/27"}
-          ]
-        },
-      "peeringList": {
-        "type":"array",
-          "defalutValue": [
-              {"destinationPeeringName": "AZG-Az-InfraDMZ-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-DMZ"},
-              {"destinationPeeringName": "AZG-Vir-InfraDMZ-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-DMZ"}
-          ]
-      },
-      "securityPeeringList": {
-        "type":"array",
-          "defalutValue": [
-              {"destinationPeeringName": "AZG-Az-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" },
-              {"destinationPeeringName": "AZG-Vir-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" }
-          ]
-      },
       "deploymentType": {
         "type": "string",
         "defaultValue": "Prod",
@@ -69,19 +41,12 @@
     "variables": {
       "templateUriNetwork": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'network.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
       "templateUriNSG": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'nsg.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
-      "parametersNetwork": {
-        "vnetNames": {
-            "value": [
-                {"region": "Az", "locationName": "westus", "networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "243", "network": "10.243.32.0/20"},
-                {"region": "Vir", "locationName": "eastus","networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "242", "network": "10.242.32.0/20"}
-            ]
+      "subnetNames": {
+          "value": [
+              {"name": "Enterprise-Apps-1", "networkCIDR": "64/27"},
+              {"name": "Enterprise-Apps-2", "networkCIDR": "96/27"}
+          ]
         },
-        "subnetNames": {
-            "value": [
-                {"name": "Enterprise-Apps-1", "networkCIDR": "64/27"},
-                {"name": "Enterprise-Apps-2", "networkCIDR": "96/27"}
-            ]
-          },
         "peeringList": {
             "value": [
                 {"destinationPeeringName": "AZG-Az-InfraDMZ-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-DMZ"},
@@ -93,9 +58,14 @@
                 {"destinationPeeringName": "AZG-Az-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" },
                 {"destinationPeeringName": "AZG-Vir-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" }
             ]
-        }
       },
       "parametersStorage": {
+      },
+      "vnetNames": {
+        "value": [
+            {"region": "Az", "locationName": "westus", "networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "243", "network": "10.243.32.0/20"},
+            {"region": "Vir", "locationName": "eastus","networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "242", "network": "10.242.32.0/20"}
+        ]
       }
     },
     "resources": [
@@ -108,7 +78,20 @@
           "templateLink": {
             "uri": "[variables('templateUriNSG')]"
           },
-          "parameters": "[variables('parametersNetwork')]"
+          "parameters": {
+            "vnetNames": {
+            "value": "[variables('vnetNames')]"
+          },
+          "subnetNames": {
+            "value": "[variables('subnetNames')]"
+          },
+          "peeringList": {
+            "value": "[variables('peeringList')]"
+          },
+          "securityPeeringList": {
+            "value": "[variables('securityPeeringList')]"
+          }
+          }
         }
       },
       {
@@ -125,16 +108,16 @@
           },
           "parameters": {
             "vnetNames": {
-              "value": "[parameters('vnetNames')]"
+              "value": "[variables('vnetNames')]"
             },
             "subnetNames": {
-              "value": "[parameters('subnetNames')]"
+              "value": "[variables('subnetNames')]"
             },
             "peeringList": {
-              "value": "[parameters('peeringList')]"
+              "value": "[variables('peeringList')]"
             },
             "securityPeeringList": {
-              "value": "[parameters('securityPeeringList')]"
+              "value": "[variables('securityPeeringList')]"
             },
             "nsgId": {
               "value": "[resourceId('Microsoft.Network/networkSecurityGroups', 'deployNSG')]"
