@@ -92,8 +92,10 @@
           "templateLink": {
             "uri": "[variables('templateUriNetwork')]"
           },
-          "parameters": "[variables('parametersNetwork')]"
-          
+          "parameters": {
+            "vnetNames": "[variables('parametersNetwork')]",
+            "subnetNames": "[variables('parametersNetwork')]"
+          }
         }
       }
     ],
