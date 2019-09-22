@@ -115,6 +115,9 @@
         "name": "deployNetwork",
         "type": "Microsoft.Resources/deployments",
         "apiVersion": "2017-05-10",
+        "dependsOn": [
+          "deployNSG"
+        ],
         "properties": {
           "mode": "Incremental",
           "templateLink": {
