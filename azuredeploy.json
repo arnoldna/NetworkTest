@@ -81,7 +81,7 @@
             "uri": "[variables('templateUriNSG')]"
           },
           "parameters": {
-            "[variables(')]"
+            "value":"[variables('parametersNetwork')]"
           }
         }
       },
@@ -100,9 +100,6 @@
           "parameters": {
             "nsgId": {
               "value": "[resourceId('Microsoft.Network/networkSecurityGroups', 'deployNSG')]"
-            },
-            "vnetNames": {
-              "value": "[variables('vnetNames')]"
             }
           }
         }
