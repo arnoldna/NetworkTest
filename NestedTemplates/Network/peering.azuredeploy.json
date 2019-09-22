@@ -52,7 +52,7 @@
         {
             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
             "apiVersion": "2019-04-01",
-            "name": "[concat('test/',variables('vnetPeerList').vnetPeers[copyIndex()].vnetPeerName)]",
+            "name": "[concat(variables('vnetPeerList').vnetPeers[copyIndex()].vnetPeerName, '/ProdDMZ')]",
             "location": "[resourceGroup().location]",
             "comments": "Initiate network pereing to the ProdDMZ netowrk. To complete the peer a separate deployment will need to be setup on in the ProdDMZ subcription.",
             "copy":{
