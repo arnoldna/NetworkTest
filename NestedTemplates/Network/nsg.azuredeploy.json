@@ -114,6 +114,24 @@
                     }
                 }
             ]
+        },
+        "vnetNameList": {
+            "copy": [
+                {
+                    "name": "vnetNames",
+                    "count": "[length(parameters('vnetNames'))]",
+                    "input": {
+                        "vnetRegion": "[parameters('vnetNames')[copyIndex('vnetNames')].region]",
+                        "vnetLocation": "[parameters('vnetNames')[copyIndex('vnetNames')].locationName]",
+                        "vnetNetworkName": "[parameters('vnetNames')[copyIndex('vnetNames')].networkName]",
+                        "vnetNumber": "[parameters('vnetNames')[copyIndex('vnetNames')].vnetNumber]",
+                        "vnetNetworkOctet": "[parameters('vnetNames')[copyIndex('vnetNames')].ventNetworkOctet]",
+                        "vnetNetwork": "[parameters('vnetNames')[copyIndex('vnetNames')].network]",
+                        "vnetName": "[concat('AZG-', parameters('vnetNames')[copyIndex('vnetNames')].region, '-', parameters('vnetNames')[copyIndex('vnetNames')].networkName, '-Vnet', parameters('vnetNames')[copyIndex('vnetNames')].vnetNumber)]",
+                        "vnetPrefix": "[concat('AZG-', parameters('vnetNames')[copyIndex('vnetNames')].region, '-', parameters('vnetNames')[copyIndex('vnetNames')].networkName)]"
+                    }
+                }
+            ]
         }
     },
     "resources": [
