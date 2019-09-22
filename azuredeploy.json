@@ -93,8 +93,8 @@
             "uri": "[variables('templateUriNetwork')]"
           },
           "parameters": {
-            "vnetNames": "[variables('parametersNetwork')]",
-            "subnetNames": "[variables('parametersNetwork')]"
+            "vnetNames": "[variables('parametersNetwork').vnetNames]",
+            "subnetNames": "[variables('parametersNetwork').subnetNames]"
           }
         }
       }
