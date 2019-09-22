@@ -1,89 +1,105 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-      "deploymentType": {
-        "type": "string",
-        "defaultValue": "Prod",
-        "allowedValues": [
-          "Dev",
-          "Pre Prod",
-          "Prod"
-        ],
-        "metadata": {
-          "description": "Describes scope of deployment."
-        }
-      },
-      "environmentName": {
-        "type": "string",
-        "defaultValue": "prod",
-        "allowedValues": [
-          "dev",
-          "devtest",
-          "stage",
-          "test",
-          "preprod",
-          "prod"
-        ],
-        "metadata": {
-          "description": "Describes plan's pricing tier and capacity. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
-        }
-      },
-      "_artifactsLocation": {
-        "type": "string",
-        "defaultValue": "https://raw.githubusercontent.com/arnoldna/NetworkTest/user/arnoldna/DevTest"
-      },
-      "_artifactsLocationSasToken": {
-        "type": "string",
-        "defaultValue": ""
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "deploymentType": {
+      "type": "string",
+      "defaultValue": "Prod",
+      "allowedValues": [
+        "Dev",
+        "Pre Prod",
+        "Prod"
+      ],
+      "metadata": {
+        "description": "Describes scope of deployment."
       }
     },
-    "variables": {
-      "templateUriNetwork": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'network.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
-      "templateUriNSG": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'nsg.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
-      "parametersNetwork": {
-        "vnetNames": {
-            "value": [
-                {"region": "Az", "locationName": "westus", "networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "243", "network": "10.243.32.0/20"},
-                {"region": "Vir", "locationName": "eastus","networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "242", "network": "10.242.32.0/20"}
-            ]
-        },
-        "subnetNames": {
-            "value": [
-                {"name": "Enterprise-Apps-1", "networkCIDR": "64/27"},
-                {"name": "Enterprise-Apps-2", "networkCIDR": "96/27"}
-            ]
-          },
-        "peeringList": {
-            "value": [
-                {"destinationPeeringName": "AZG-Az-InfraDMZ-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-DMZ"},
-                {"destinationPeeringName": "AZG-Vir-InfraDMZ-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-DMZ"}
-            ]
-        },
-        "securityPeeringList": {
-            "value": [
-                {"destinationPeeringName": "AZG-Az-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" },
-                {"destinationPeeringName": "AZG-Vir-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" }
-            ]
-        }
+    "environmentName": {
+      "type": "string",
+      "defaultValue": "prod",
+      "allowedValues": [
+        "dev",
+        "devtest",
+        "stage",
+        "test",
+        "preprod",
+        "prod"
+      ],
+      "metadata": {
+        "description": "Describes plan's pricing tier and capacity. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
       }
     },
-    "resources": [
-      {
-        "name": "deployNSG",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2017-05-10",
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[variables('templateUriNSG')]"
-          },
-          "parameters": {
-            "value":"[variables('parametersNetwork')]"
-          }
-        }
+    "_artifactsLocation": {
+      "type": "string",
+      "defaultValue": "https://raw.githubusercontent.com/arnoldna/NetworkTest/user/arnoldna/DevTest"
+    },
+    "_artifactsLocationSasToken": {
+      "type": "string",
+      "defaultValue": ""
+    }
+  },
+  "variables": {
+    "templateUriNetwork": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'network.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
+    "templateUriNSG": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'nsg.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
+    "parametersNetwork": {
+      "vnetNames": {
+          "value": [
+              {"region": "Az", "locationName": "westus", "networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "243", "network": "10.243.32.0/20"},
+              {"region": "Vir", "locationName": "eastus","networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "242", "network": "10.242.32.0/20"}
+          ]
+      },
+      "subnetNames": {
+          "value": [
+              {"name": "Enterprise-Apps-1", "networkCIDR": "64/27"},
+              {"name": "Enterprise-Apps-2", "networkCIDR": "96/27"}
+          ]
+        },
+      "peeringList": {
+          "value": [
+              {"destinationPeeringName": "AZG-Az-InfraDMZ-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-DMZ"},
+              {"destinationPeeringName": "AZG-Vir-InfraDMZ-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-DMZ"}
+          ]
+      },
+      "securityPeeringList": {
+          "value": [
+              {"destinationPeeringName": "AZG-Az-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" },
+              {"destinationPeeringName": "AZG-Vir-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" }
+          ]
       }
-    ],
-    "outputs": {}
+    },
+    "parametersStorage": {
+    }
+  },
+  "resources": [
+    {
+      "name": "deployNetwork",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('templateUriNetwork')]"
+        },
+        "parameters": "[variables('parametersNetwork')]"
+      }
+    },
+    {
+      "name": "deployNSG",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('templateUriNSG')]"
+        },
+        "parameters": "[variables('parametersNetwork')]"
+      }
+    }
+  ],
+  "outputs": {
+    "parentRG": {
+      "type": "object",
+      "value": "[subscription()]"
+    }
+  }
 }
-  
