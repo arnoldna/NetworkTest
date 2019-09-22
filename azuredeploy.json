@@ -41,7 +41,8 @@
     "variables": {
       "templateUriNetwork": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'network.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
       "templateUriNSG": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'nsg.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
-      "subnetNames": {
+      "parametersNetwork": {
+        "subnetNames": {
           "value": [
               {"name": "Enterprise-Apps-1", "networkCIDR": "64/27"},
               {"name": "Enterprise-Apps-2", "networkCIDR": "96/27"}
@@ -59,13 +60,14 @@
                 {"destinationPeeringName": "AZG-Vir-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" }
             ]
       },
-      "parametersStorage": {
-      },
       "vnetNames": {
         "value": [
             {"region": "Az", "locationName": "westus", "networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "243", "network": "10.243.32.0/20"},
             {"region": "Vir", "locationName": "eastus","networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "242", "network": "10.242.32.0/20"}
         ]
+      }
+    },
+      "parametersStorage": {
       }
     },
     "resources": [
@@ -79,18 +81,7 @@
             "uri": "[variables('templateUriNSG')]"
           },
           "parameters": {
-            "vnetNames": {
-            "value": "[variables('vnetNames')]"
-          },
-          "subnetNames": {
-            "value": "[variables('subnetNames')]"
-          },
-          "peeringList": {
-            "value": "[variables('peeringList')]"
-          },
-          "securityPeeringList": {
-            "value": "[variables('securityPeeringList')]"
-          }
+            "[variables(')]"
           }
         }
       },
