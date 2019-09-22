@@ -84,26 +84,6 @@
             "value":"[variables('parametersNetwork')]"
           }
         }
-      },
-      {
-        "name": "deployNetwork",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2017-05-10",
-        "dependsOn": [
-          "deployNSG"
-        ],
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[variables('templateUriNetwork')]"
-          },
-          "parameters": {
-            "nsgId": {
-              "value": "[resourceId('Microsoft.Network/networkSecurityGroups', 'deployNSG')]"
-            },
-            "value":"[variables('parametersNetwork')]"
-          }
-        }
       }
     ],
     "outputs": {}
