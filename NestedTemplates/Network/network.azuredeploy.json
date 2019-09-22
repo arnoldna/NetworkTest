@@ -127,17 +127,6 @@
                 }
             ]
         },
-        "snNamesList": {
-            "copy": [
-                {
-                    "name": "snNames",
-                    "count": "[length(parameters('subnetNames'))]",
-                    "input": {
-                        "subnetName": "[parameters('subnetNames')[copyIndex('snNames')].name]"
-                    }
-                }
-            ]
-        },
         "vnetNameList": {
             "copy": [
                 {
