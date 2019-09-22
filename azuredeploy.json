@@ -100,7 +100,8 @@
           "parameters": {
             "nsgId": {
               "value": "[resourceId('Microsoft.Network/networkSecurityGroups', 'deployNSG')]"
-            }
+            },
+            "value":"[variables('parametersNetwork')]"
           }
         }
       }
