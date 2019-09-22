@@ -93,13 +93,19 @@
             "uri": "[variables('templateUriNetwork')]"
           },
           "parameters": {
-            "vnetNames": "[variables('parametersNetwork').vnetNames]",
-            "subnetNames": "[variables('parametersNetwork').subnetNames]"
+            "vnetNames": {
+              "type": "array",
+              "defaultValue": "[variables('parametersNetwork').vnetNames]"
+            },
+            "subnetNames": {
+              "type": "array",
+              "defaultValue": "[variables('parametersNetwork').subnetNames]"
           }
         }
       }
+    ]
+      }
     ],
-    "outputs": {
-    }
-  }
+    "outputs": {}
+}
   
