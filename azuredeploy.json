@@ -93,7 +93,7 @@
             "uri": "[variables('templateUriNSG')]"
           },
           "parameters": "[variables('parametersNetwork')]",
-          "myValueFromAnotherDeployment": { "value": "[reference('my-deployment', '2017-05-10').outputs.myOutput.value]" }
+          "myValueFromAnotherDeployment": { "value": "[reference('deployNetwork', '2017-05-10').outputs.vnetOutput.value]" }
         }
       }
     ],
