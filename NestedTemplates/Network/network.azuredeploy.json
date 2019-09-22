@@ -330,7 +330,7 @@
       "vnetOutput":
       {
         "type": "array",
-        "value": "[reference(variables('vnetNameList').vnetNames[copyIndex()].vnetName)]"
+        "value": "[reference(variables('subnetNamesList'))]"
       }
     }
 }
