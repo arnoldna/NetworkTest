@@ -329,7 +329,7 @@
     "outputs": {
       "vnetOutput":
       {
-        "type": "array",
+        "type": "string",
         "value": "[reference(variables('subnetNamesList'))]"
       }
     }
