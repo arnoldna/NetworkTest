@@ -100,10 +100,9 @@
             "subnetNames": {
               "type": "array",
               "defaultValue": "[variables('parametersNetwork').subnetNames]"
+            }
           }
         }
-      }
-    ]
       }
     ],
     "outputs": {}
