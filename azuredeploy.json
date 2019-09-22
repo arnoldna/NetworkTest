@@ -94,16 +94,16 @@
           },
           "parameters": {
             "vnetNames": {
-              "value": "[variables('parametersNetwork').vnetNames]"
+              "value": "[variables('parametersNetwork')]"
             },
             "subnetNames": {
-              "value": "[variables('parametersNetwork').subnetNames]"
+              "value": "[variables('parametersNetwork')]"
             },
             "peeringList": {
-              "value": "[variables('parametersNetwork').peeringList]"
+              "value": "[variables('parametersNetwork')]"
             },
             "securityPeeringList": {
-              "value": "[variables('parametersNetwork').securityPeeringList]"
+              "value": "[variables('parametersNetwork')]"
             }
           }
         }
