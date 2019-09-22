@@ -41,6 +41,7 @@
   "variables": {
     "templateUriNetwork": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'network.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
     "templateUriNSG": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'nsg.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
+    "subnetList": "[]",
     "parametersNetwork": {
       "vnetNames": {
           "value": [
@@ -80,6 +81,9 @@
         "templateLink": {
           "uri": "[variables('templateUriNetwork')]"
         },
+        "state": {
+          "value": "[if(equals(copyIndex('exampleCopy'), 0), variables('subnetList'), reference(concat('linked-', copyIndex('exampleCopy'))).outputs.state.value)]"
+      },
         "parameters": "[variables('parametersNetwork')]"
       }
     },
@@ -97,5 +101,9 @@
     }
   ],
   "outputs": {
+    "aggregate": {
+      "type": "array",
+      "value": "[reference(concat('linked-', variables('parametersNetwork'))).outputs.state.value]"
+  }
   }
 }
