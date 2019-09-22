@@ -65,7 +65,7 @@
             "properties": {
                 "peeringState": "Initiated",
                 "remoteVirtualNetwork": {
-                    "id": "[resourceID(concat('/subscriptions/1db25687-69f8-41dc-845f-2958b094e631/','resoureGroups/Prod-Network/'), 'Microsoft.Network/virtualNetworks', variables('vnetNameList').vnetNames[copyIndex()].vnetName)]"
+                    "id": "/subscriptions/1db25687-69f8-41dc-845f-2958b094e631/resourceGroups/Prod-Network/providers/Microsoft.Network/virtualNetworks/AZG-Az-EntApp2-Vnet1"
                 },
                 "allowVirtualNetworkAccess": true,
                 "allowForwardedTraffic": true,
