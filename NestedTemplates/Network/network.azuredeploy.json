@@ -339,7 +339,7 @@
     "outputs": {
       "vnetOutput":
       {
-        "type": "string",
+        "type": "array",
         "value": "[variables('snNamesList')]"
       }
     }
