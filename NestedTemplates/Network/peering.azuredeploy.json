@@ -64,7 +64,7 @@
             ],
             "properties": {
                 "remoteVirtualNetwork": {
-                    "id": "[concat('/subscriptions/1db25687-69f8-41dc-845f-2958b094e631/resourceGroups/Prod-Network/providers/Microsoft.Network/virtualNetworks/', variables('vnetNameList').vnetNames[copyIndex()].vnetName)]"
+                    "id": "[reference(concat('/subscriptions/1db25687-69f8-41dc-845f-2958b094e631/resourceGroups/Prod-Network/providers/Microsoft.Network/virtualNetworks/', variables('vnetNameList').vnetNames[copyIndex()].vnetName))]"
                 },
                 "allowVirtualNetworkAccess": true,
                 "allowForwardedTraffic": true,
