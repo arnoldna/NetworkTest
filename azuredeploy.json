@@ -107,18 +107,6 @@
             "uri": "[variables('templateUriNetwork')]"
           },
           "parameters": {
-            "vnetNames": {
-              "value": "[variables('vnetNames').value]"
-            },
-            "subnetNames": {
-              "value": "[variables('subnetNames').value]"
-            },
-            "peeringList": {
-              "value": "[variables('peeringList').value]"
-            },
-            "securityPeeringList": {
-              "value": "[variables('securityPeeringList').value]"
-            },
             "nsgId": {
               "value": "[resourceId('Microsoft.Network/networkSecurityGroups', 'deployNSG')]"
             }
