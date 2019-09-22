@@ -145,7 +145,7 @@
                 "displayName": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-NSG')]"
             },
             "copy":{
-                "name": "subnets",
+                "name": "subnetNamesList",
                 "count": "[length(parameters('subnetNames'))]"
             },
             "properties": {
