@@ -328,6 +328,10 @@
             "apiVersion": "2018-03-01",
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "name": "[concat(variables('vnetNameList').vnetNames[copyIndex()].vnetName, '/', variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-SN')]",
+            "copy":{
+                "name": "vnetNames",
+                "count": "[length(parameters('vnetNames'))]"
+            },
             "location": "[resourceGroup().location]",
             "properties": {
               "addressPrefix": "[parameters('subnetAddressPrefix')]",
