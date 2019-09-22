@@ -109,6 +109,9 @@
           "parameters": {
             "nsgId": {
               "value": "[resourceId('Microsoft.Network/networkSecurityGroups', 'deployNSG')]"
+            },
+            "vnetNames": {
+              "value": "[variables('vnetNames')]"
             }
           }
         }
