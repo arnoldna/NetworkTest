@@ -337,10 +337,5 @@
         }
     ],
     "outputs": {
-      "vnetOutput":
-      {
-        "type": "array",
-        "value": "[variables('snNamesList')]"
-      }
     }
 }

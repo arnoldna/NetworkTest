@@ -72,6 +72,18 @@
     },
     "resources": [
       {
+        "name": "deployNSG",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2017-05-10",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('templateUriNSG')]"
+          },
+          "parameters": "[variables('parametersNetwork')]"
+        }
+      },
+      {
         "name": "deployNetwork",
         "type": "Microsoft.Resources/deployments",
         "apiVersion": "2017-05-10",
@@ -81,19 +93,6 @@
             "uri": "[variables('templateUriNetwork')]"
           },
           "parameters": "[variables('parametersNetwork')]"
-        }
-      },
-      {
-        "name": "deployNSG",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2017-05-10",
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[variables('templateUriNSG')]"
-          },
-          "parameters": "[variables('parametersNetwork')]",
-          "myValueFromAnotherDeployment": { "value": "[reference('deployNetwork', '2017-05-10').outputs.vnetOutput.value]" }
         }
       }
     ],
