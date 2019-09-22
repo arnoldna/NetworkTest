@@ -326,13 +326,5 @@
         }
     ],
     "outputs": {
-        "virtualNetworkName": {
-            "type": "array",
-            "value": "[variables('vnetNameList')]"
-        },
-        "subnetName": {
-            "type": "array",
-            "value": "[variables('subnetNamesList')]"
-        }
     }
 }
