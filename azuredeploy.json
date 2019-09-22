@@ -97,10 +97,6 @@
       }
     ],
     "outputs": {
-      "parentRG": {
-        "type": "object",
-        "value": "[subscription()]"
-      }
     }
   }
   
