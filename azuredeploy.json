@@ -66,9 +66,7 @@
             {"region": "Vir", "locationName": "eastus","networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "242", "network": "10.242.32.0/20"}
         ]
       }
-    },
-      "parametersStorage": {
-      }
+    }
     },
     "resources": [
       {
