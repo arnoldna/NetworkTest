@@ -329,9 +329,6 @@
         }
     ],
     "outputs": {
-        "state": {
-            "type": "array",
-            "value": "[concat(parameters('state'), array(variables('subnetNamesList')))]"
-        }
+
     }
 }
