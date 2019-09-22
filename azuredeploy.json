@@ -42,7 +42,7 @@
     "templateUriNetwork": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'network.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
     "templateUriNSG": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'nsg.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
     "parametersNetwork": {
-      "state": {"value":[]},
+      "state": {"value":[{}]},
       "vnetNames": {
           "value": [
               {"region": "Az", "locationName": "westus", "networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "243", "network": "10.243.32.0/20"},
