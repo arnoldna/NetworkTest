@@ -2,6 +2,31 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+      "vnetNames": {
+        "value": [
+            {"region": "Az", "locationName": "westus", "networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "243", "network": "10.243.32.0/20"},
+            {"region": "Vir", "locationName": "eastus","networkName": "EntApp2", "vnetNumber": 1, "ventNetworkOctet": "242", "network": "10.242.32.0/20"}
+        ]
+    },
+    "subnetNames": {
+        "value": [
+            {"name": "Enterprise-Apps-1", "networkCIDR": "64/27"},
+            {"name": "Enterprise-Apps-2", "networkCIDR": "96/27"}
+        ]
+      },
+    "peeringList": {
+        "value": [
+            {"destinationPeeringName": "AZG-Az-InfraDMZ-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-DMZ"},
+            {"destinationPeeringName": "AZG-Vir-InfraDMZ-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-DMZ"}
+        ]
+    },
+    "securityPeeringList": {
+        "value": [
+            {"destinationPeeringName": "AZG-Az-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" },
+            {"destinationPeeringName": "AZG-Vir-Security-VNet1", "destinationSubscriptionID": "cff004d9-5989-432e-8801-bd8539bf7ee4", "destinationResourceGroup": "Prod-Security" }
+        ]
+    }
+  }
       "deploymentType": {
         "type": "string",
         "defaultValue": "Prod",
@@ -94,16 +119,19 @@
           },
           "parameters": {
             "vnetNames": {
-              "value": "[variables('parametersNetwork')]"
+              "value": "[parameters('vnetNames')]"
             },
             "subnetNames": {
-              "value": "[variables('parametersNetwork')]"
+              "value": "[parameters('subnetNames')]"
             },
             "peeringList": {
-              "value": "[variables('parametersNetwork')]"
+              "value": "[parameters('peeringList')]"
             },
             "securityPeeringList": {
-              "value": "[variables('parametersNetwork')]"
+              "value": "[parameters('securityPeeringList')]"
+            },
+            "nsgId": {
+              "value": "[resourceId('Microsoft.Network/networkSecurityGroups', 'deployNSG')]"
             }
           }
         }
