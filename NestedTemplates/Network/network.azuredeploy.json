@@ -326,5 +326,18 @@
         }
     ],
     "outputs": {
+        "outputs": {
+            "virtualNetworkResourceGroupName": {
+              "type": "string",
+              "value": "[resourceGroup().name]"
+            },
+            "virtualNetworkName": {
+              "type": "array",
+              "value": "[variables('vnetNameList')]"
+            },
+            "subnetName": {
+              "type": "array",
+              "value": "[variables('subnetNamesList')]"
+            
     }
 }
