@@ -1,8 +1,121 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
-    "variables": {},
+    "parameters": {
+        "vnetNames": {
+            "type": "array"
+        },
+        "subnetNames": {
+            "type": "array"
+        },
+        "peeringList": {
+            "type": "array"
+        },
+        "securityPeeringList": {
+            "type": "array"
+        }
+    },
+    "variables": {
+        "defaultSecurityRules": [
+            {
+                "name": "10_net",
+                "properties": {
+                    "protocol": "*",
+                    "sourcePortRange": "*",
+                    "destinationPortRange": "*",
+                    "sourceAddressPrefix": "*",
+                    "destinationAddressPrefix": "10.0.0.0/8",
+                    "access": "Allow",
+                    "priority": 100,
+                    "direction": "Outbound",
+                    "sourcePortRanges": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefixes": [],
+                    "destinationAddressPrefixes": []
+                }
+            },
+            {
+                "name": "172_net",
+                "properties": {
+                    "protocol": "*",
+                    "sourcePortRange": "*",
+                    "destinationPortRange": "*",
+                    "sourceAddressPrefix": "*",
+                    "destinationAddressPrefix": "172.16.0.0/20",
+                    "access": "Allow",
+                    "priority": 110,
+                    "direction": "Outbound",
+                    "sourcePortRanges": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefixes": [],
+                    "destinationAddressPrefixes": []
+                }
+            },
+            {
+                "name": "192_net",
+                "properties": {
+                    "protocol": "*",
+                    "sourcePortRange": "*",
+                    "destinationPortRange": "*",
+                    "sourceAddressPrefix": "*",
+                    "destinationAddressPrefix": "192.168.0.0/24",
+                    "access": "Allow",
+                    "priority": 120,
+                    "direction": "Outbound",
+                    "sourcePortRanges": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefixes": [],
+                    "destinationAddressPrefixes": []
+                }
+            },
+            {
+                "name": "AzureCloud_Services",
+                "properties": {
+                    "protocol": "*",
+                    "sourcePortRange": "*",
+                    "destinationPortRange": "8080",
+                    "sourceAddressPrefix": "*",
+                    "destinationAddressPrefix": "AzureCloud",
+                    "access": "Allow",
+                    "priority": 130,
+                    "direction": "Outbound",
+                    "sourcePortRanges": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefixes": [],
+                    "destinationAddressPrefixes": []
+                }
+            },
+            {
+                "name": "Deny_All",
+                "properties": {
+                    "protocol": "*",
+                    "sourcePortRange": "*",
+                    "destinationPortRange": "*",
+                    "sourceAddressPrefix": "*",
+                    "destinationAddressPrefix": "*",
+                    "access": "Deny",
+                    "priority": 1000,
+                    "direction": "Outbound",
+                    "sourcePortRanges": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefixes": [],
+                    "destinationAddressPrefixes": []
+                }
+            }
+        ],
+        "subnetNamesList": {
+            "copy": [
+                {
+                    "name": "subnetNames",
+                    "count": "[length(parameters('subnetNames'))]",
+                    "input": {
+                        "subnetName": "[parameters('subnetNames')[copyIndex('subnetNames')].name]",
+                        "subnetCIDR": "[parameters('subnetNames')[copyIndex('subnetNames')].networkCIDR]"
+                    }
+                }
+            ]
+        }
+    },
     "resources": [
         {
             "type": "Microsoft.Network/networkSecurityGroups",
