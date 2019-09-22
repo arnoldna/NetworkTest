@@ -98,9 +98,5 @@
     }
   ],
   "outputs": {
-    "aggregate": {
-      "type": "array",
-      "value": "[reference(concat('linked-', variables('parametersNetwork'))).outputs.state.value]"
-    }
   }
 }
