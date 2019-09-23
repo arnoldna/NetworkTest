@@ -138,11 +138,11 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-04-01",
-            "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-NSG')]",
+            "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-SN-NSG')]",
             "comments": "Creation of custom network security group for each VNet. Additionally this takes into account any custom rules defined in the parameters file.",
             "location": "[variables('vnetNameList').vnetNames[copyIndex()].vnetLocation]",
             "tags": {
-                "displayName": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-NSG')]"
+                "displayName": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-SN-NSG')]"
             },
             "copy":{
                 "name": "subnetNamesList",
