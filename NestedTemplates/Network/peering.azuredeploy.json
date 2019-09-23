@@ -48,11 +48,15 @@
             ]
         },
         "peeringNames":{
-            "name": "peeringList",
-            "count": "[length(parameters('vnetNames'))]",
-            "input": {
-                "peerName": "[concat(parameters('peeringlist')[copyIndex('vnetPeers')].destinationPeeringName, '/', variables('vnetNameList').vnetNames[copyIndex().vnetName])]"
-            }
+            "copy": [
+                {
+                    "name": "peeringList",
+                    "count": "[length(parameters('vnetNames'))]",
+                    "input": {
+                        "peerName": "[concat(parameters('peeringlist')[copyIndex('vnetPeers')].destinationPeeringName, '/', variables('vnetNameList').vnetNames[copyIndex().vnetName])]"
+                    }
+                }
+            ]
         }
     },
     "resources": [
