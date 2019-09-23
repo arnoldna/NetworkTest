@@ -251,9 +251,9 @@
                         "name": "subnets",
                         "count": "[length(parameters('subnetNames'))]",
                         "input": {
-                            "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-SN')]",
+                            "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-SN')]",
                             "properties": {
-                                "addressPrefix": "[variables('subnetNamesList').subnetNames[copyIndex()].subnetCIDR]",
+                                "addressPrefix": "[variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR]",
                                 "serviceEndpoints": [
                                     {
                                         "service": "Microsoft.Storage",
