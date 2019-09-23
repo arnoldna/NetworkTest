@@ -59,7 +59,7 @@
         {
             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
             "apiVersion": "2019-04-01",
-            "name": "[concat(variables('vnetPeerList').vnetPeers[copyIndex()].vnetPeerName, variables('peeringNames').peeringNames[copyIndex().peerName])]",
+            "name": "[concat(variables('vnetPeerList').vnetPeers[copyIndex()].vnetPeerName, variables('peeringNames').peeringList[copyIndex().peerName])]",
             "copy": {
                 "name": "vnetPeerList",
                 "count":"[length(parameters('vnetNames'))]"
