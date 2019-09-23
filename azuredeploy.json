@@ -15,9 +15,8 @@
         }
       },
       "environmentName": {
-        "type": "string",
-        "defaultValue": "prod",
-        "allowedValues": [
+        "type": "array",
+        "defaultValue": [
           "dev",
           "devtest",
           "stage",
@@ -36,6 +35,10 @@
       "_artifactsLocationSasToken": {
         "type": "string",
         "defaultValue": ""
+      },
+      "nsgList":{
+        "type":"array",
+        "defaultValue": []
       }
     },
     "variables": {
