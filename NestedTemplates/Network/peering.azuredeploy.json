@@ -53,7 +53,7 @@
                     "name": "peeringList",
                     "count": "[length(parameters('vnetNames'))]",
                     "input": {
-                        "peerName": "[concat(variables('vnetPeerList')[copyIndex('vnetPeers')].destinationPeeringName, '/', variables('vnetNameList').vnetNames[copyIndex().vnetName])]"
+                        "peerName": "[concat(variables('vnetPeerList')[copyIndex()].destinationPeeringName, '/', variables('vnetNameList').vnetNames[copyIndex().vnetName])]"
                     }
                 }
             ]
