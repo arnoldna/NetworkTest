@@ -50,9 +50,12 @@
         },
         "subnetNames": {
             "value": [
-                {"name": "Enterprise-Apps-1", "networkCIDR": "64/27"},
-                {"name": "Enterprise-Apps-2", "networkCIDR": "96/27"},
-                {"name": "Enterprise-Apps-3", "networkCIDR": "128/27"}
+                {"name": "Az-Enterprise-Apps-1", "networkCIDR": "10.243.32.64/27"},
+                {"name": "Vir-Enterprise-Apps-1", "networkCIDR": "10.242.32.64/27"},
+                {"name": "Az-Enterprise-Apps-2", "networkCIDR": "10.243.32.96/27"},
+                {"name": "Vir-Enterprise-Apps-2", "networkCIDR": "10.242.32.96/27"},
+                {"name": "Az-Enterprise-Apps-3", "networkCIDR": "10.243.32.128/27"},
+                {"name": "Vir-Enterprise-Apps-3", "networkCIDR": "10.242.32.128/27"}
             ]
           },
         "peeringList": {

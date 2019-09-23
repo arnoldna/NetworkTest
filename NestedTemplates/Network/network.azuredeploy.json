@@ -253,7 +253,7 @@
                         "input": {
                             "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-SN')]",
                             "properties": {
-                                "addressPrefix": "[concat('10.',variables('vnetNameList').vnetNames[copyIndex()].vnetNetworkOctet, '.32.', variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR)]",
+                                "addressPrefix": "[variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR]",
                                 "serviceEndpoints": [
                                     {
                                         "service": "Microsoft.Storage",
