@@ -46,6 +46,17 @@
                     }
                 }
             ]
+        },
+        "peeringNames":{
+            "copy": [
+                {
+                    "name": "peeringList",
+                    "count": "[length(parameters('vnetNames'))]",
+                    "input": {
+                        "peerName": "[concat(variables('vnetPeerList').vnetPeers[copyIndex('vnetPeers')].vnetPeerName, '/', variables('vnetNameList').vnetNames[copyIndex().vnetName])]"
+                    }
+                }
+            ]
         }
     },
     "resources": [
