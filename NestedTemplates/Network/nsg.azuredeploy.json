@@ -139,7 +139,7 @@
                     "name": "subnetRegion",
                     "count": "[length(parameters('subnetNames'))]",
                     "input": {
-                        "subnetAzName": "[concat('AZG-Az-', variables('subnetNamesList')[copyIndex()].subnetName, '-SN-NSG')]"
+                        "subnetAzName": "[concat('AZG-Az-', parameters('vnetNames')[copyIndex('vnetNames')].networkName, '-Vnet', parameters('vnetNames')[copyIndex('vnetNames')].vnetNumber, '-SN-NSG')]"
                     }
                 }
             ]
