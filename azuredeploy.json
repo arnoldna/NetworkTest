@@ -50,12 +50,12 @@
         },
         "subnetNames": {
             "value": [
-                {"name": "Az-Enterprise-Apps-1", "networkCIDR": "10.243.32.64/27"},
-                {"name": "Vir-Enterprise-Apps-1", "networkCIDR": "10.242.32.64/27"},
-                {"name": "Az-Enterprise-Apps-2", "networkCIDR": "10.243.32.96/27"},
-                {"name": "Vir-Enterprise-Apps-2", "networkCIDR": "10.242.32.96/27"},
-                {"name": "Az-Enterprise-Apps-3", "networkCIDR": "10.243.32.128/27"},
-                {"name": "Vir-Enterprise-Apps-3", "networkCIDR": "10.242.32.128/27"}
+                {"name": "AZG-Az-Enterprise-Apps-1", "networkCIDR": "10.243.32.64/27"},
+                {"name": "AZG-Vir-Enterprise-Apps-1", "networkCIDR": "10.242.32.64/27"},
+                {"name": "AZG-Az-Enterprise-Apps-2", "networkCIDR": "10.243.32.96/27"},
+                {"name": "AZG-Vir-Enterprise-Apps-2", "networkCIDR": "10.242.32.96/27"},
+                {"name": "AZG-Az-Enterprise-Apps-3", "networkCIDR": "10.243.32.128/27"},
+                {"name": "AZG-Vir-Enterprise-Apps-3", "networkCIDR": "10.242.32.128/27"}
             ]
           },
         "peeringList": {
@@ -73,18 +73,7 @@
       }
     },
     "resources": [
-      {
-        "name": "deployNetwork",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2017-05-10",
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[variables('templateUriNetwork')]"
-          },
-          "parameters": "[variables('parametersNetwork')]"
-        }
-      },
+
       {
         "name": "deployNSG",
         "type": "Microsoft.Resources/deployments",

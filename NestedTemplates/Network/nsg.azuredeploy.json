@@ -165,13 +165,5 @@
         }
     ],
     "outputs": {
-        "resourceGroupId":{
-            "type": "string",
-            "value": "[resourceGroup().name]"
-        },
-        "subscriptionId":{
-            "type": "string",
-            "value": "[subscription().id]"
-        }
     }
 }
