@@ -15,8 +15,9 @@
         }
       },
       "environmentName": {
-        "type": "array",
-        "defaultValue": [
+        "type": "string",
+        "defaultValue": "prod",
+        "allowedValues": [
           "dev",
           "devtest",
           "stage",
