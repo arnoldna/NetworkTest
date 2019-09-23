@@ -40,6 +40,7 @@
     },
     "variables": {
       "templateUriNetwork": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'network.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
+      "templateUriNSG": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'NSG.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
       "parametersNetwork": {
         "vnetNames": {
             "value": [
@@ -81,6 +82,18 @@
           },
           "parameters": "[variables('parametersNetwork')]"
         }
+      },
+      {
+        "name": "deployNSG",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2017-05-10",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('templateUriNetwork')]"
+          },
+          "parameters": "[variables('parametersNetwork')]"
+        }
       }
     ],
     "outputs": {
@@ -90,3 +103,4 @@
       }
     }
   }
+  
