@@ -123,7 +123,7 @@
                     "input": {
                         "subnetName": "[parameters('subnetNames')[copyIndex('subnetNames')].name]",
                         "subnetCIDR": "[parameters('subnetNames')[copyIndex('subnetNames')].networkCIDR]",
-                        "subnetAddrSplit": "[split(parameters('subnetNames')[copyIndex('subnetNames')].networkCIDR,'.')]"
+                        "subnetAddrSplit": "[split(parameters('subnetNames')[copyIndex('subnetNames')].subnetCIDR,'.')]"
                     }
                 }
             ]
@@ -242,7 +242,7 @@
             "dependsOn": [
             ],
             "properties": {
-                "addressSpace": {
+                "addressSpace": {  
                     "addressPrefixes": [
                         "[variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork]"
                     ]
@@ -252,9 +252,9 @@
                         "name": "subnets",
                         "count": "[length(parameters('subnetNames'))]",
                         "input": {
-                            "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-SN')]",
+                            "name": "[concat('AZG-', variables('vnetNameList').vnetNames[copyIndex()].vnetRegion, '-', variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-SN')]",
                             "properties": {
-                                "addressPrefix": "[concat(variables('subnetNamesList')[0].subnetAddrSplit, variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, variables('subnetNamesList')[2].subnetAddrSplit, variables('subnetNamesList')[3].subnetAddrSplit)]",
+                                "addressPrefix": "[concat('10.',variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR)]",
                                 "serviceEndpoints": [
                                     {
                                         "service": "Microsoft.Storage",
