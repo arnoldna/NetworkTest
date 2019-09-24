@@ -123,7 +123,7 @@
                     "input": {
                         "subnetName": "[parameters('subnetNames')[copyIndex('subnetNames')].name]",
                         "subnetCIDR": "[parameters('subnetNames')[copyIndex('subnetNames')].networkCIDR]",
-                        "subnetAddrSplit": "[split(parameters('subnetNames')[copyIndex('subnetNames')].subnetCIDR,'.')]"
+                        "subnetAddrSplit": "[split(parameters('subnetNames')[copyIndex('subnetNames')].networkCIDR,'.')]"
                     }
                 }
             ]
