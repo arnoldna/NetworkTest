@@ -253,7 +253,7 @@
                         "input": {
                             "name": "[concat('AZG-', variables('vnetNameList').vnetNames[copyIndex()].vnetRegion, '-', variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-SN')]",
                             "properties": {
-                                "addressPrefix": "[concat('10.',variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, variables('subnetNamesList').subnetNames[copyIndex()].subnetCIDR)]",
+                                "addressPrefix": "[concat('10.',variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR)]",
                                 "serviceEndpoints": [
                                     {
                                         "service": "Microsoft.Storage",
