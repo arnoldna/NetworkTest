@@ -122,7 +122,8 @@
                     "count": "[length(parameters('subnetNames'))]",
                     "input": {
                         "subnetName": "[parameters('subnetNames')[copyIndex('subnetNames')].name]",
-                        "subnetCIDR": "[parameters('subnetNames')[copyIndex('subnetNames')].networkCIDR]"
+                        "subnetCIDR": "[parameters('subnetNames')[copyIndex('subnetNames')].networkCIDR]",
+                        "subnetAddrSplit": "[split(parameters('subnetNames')[copyIndex('subnetNames')].subnetCIDR,'.')]"
                     }
                 }
             ]
@@ -253,7 +254,7 @@
                         "input": {
                             "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-SN')]",
                             "properties": {
-                                "addressPrefix": "[variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR]",
+                                "addressPrefix": "[concat(variables('subnetNamesList').subnetNames[copyIndex(0)].subnetAddrSplit,variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, variables('subnetNamesList').subnetNames[copyIndex(2)].subnetAddrSplit, variables('subnetNamesList').subnetNames[copyIndex(3)].subnetAddrSplit)]",
                                 "serviceEndpoints": [
                                     {
                                         "service": "Microsoft.Storage",
