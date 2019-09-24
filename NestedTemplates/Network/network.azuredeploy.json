@@ -254,7 +254,7 @@
                         "input": {
                             "name": "[concat(variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-SN')]",
                             "properties": {
-                                "addressPrefix": "[concat(variables('subnetNamesList').subnetNames[copyIndex(0)].subnetAddrSplit,variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, variables('subnetNamesList').subnetNames[copyIndex(2)].subnetAddrSplit, variables('subnetNamesList').subnetNames[copyIndex(3)].subnetAddrSplit)]",
+                                "addressPrefix": "[concat(variables('subnetNamesList')[0].subnetAddrSplit, variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, variables('subnetNamesList')[2].subnetAddrSplit, variables('subnetNamesList')[3].subnetAddrSplit)]",
                                 "serviceEndpoints": [
                                     {
                                         "service": "Microsoft.Storage",

@@ -5,10 +5,34 @@
         "addressPrefix": {
             "type": "string",
             "defaultValue": "10.2.0.0/24"
-        }
+        },
+        "subnetNames": {
+            "type": "array",
+            "defaultValue": [
+              {"name": "AZG-Az-Enterprise-Apps-1", "networkCIDR": "10.243.32.64/27"},
+              {"name": "AZG-Az-Enterprise-Apps-2", "networkCIDR": "10.243.32.96/27"},
+              {"name": "AZG-Az-Enterprise-Apps-3", "networkCIDR": "10.243.32.128/27"},
+              {"name": "AZG-Vir-Enterprise-Apps-1", "networkCIDR": "10.242.32.64/27"},
+              {"name": "AZG-Vir-Enterprise-Apps-2", "networkCIDR": "10.242.32.96/27"},
+              {"name": "AZG-Vir-Enterprise-Apps-3", "networkCIDR": "10.242.32.128/27"}
+            ]
+          }
     },
     "variables": {
-        "SeperatedValues": "[split(parameters('addressPrefix'),'.')]"
+        "SeperatedValues": "[split(parameters('addressPrefix'),'.')]",
+        "subnetNamesList": {
+            "copy": [
+                {
+                    "name": "subnetNames",
+                    "count": "[length(parameters('subnetNames'))]",
+                    "input": {
+                        "subnetName": "[parameters('subnetNames')[copyIndex('subnetNames')].name]",
+                        "subnetCIDR": "[parameters('subnetNames')[copyIndex('subnetNames')].networkCIDR]",
+                        "subnetAddrSplit": "[split(parameters('subnetNames')[copyIndex('subnetNames')].networkCIDR,'.')]"
+                    }
+                }
+            ]
+        }
     },
     "resources": [],
     "outputs": {
