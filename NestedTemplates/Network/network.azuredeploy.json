@@ -251,9 +251,9 @@
                         "name": "subnets",
                         "count": "[length(parameters('subnetNames'))]",
                         "input": {
-                            "name": "[concat('AZG-', variables('vnetNameList').vnetNames[copyIndex()].vnetRegion, '-', variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetName, '-SN')]",
+                            "name": "[concat('AZG-', variables('vnetNameList').vnetNames[copyIndex()].vnetRegion, '-', variables('subnetNamesList').subnetNames[copyIndex()].subnetName, '-SN')]",
                             "properties": {
-                                "addressPrefix": "[concat('10.',variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, variables('subnetNamesList').subnetNames[copyIndex('subnets')].subnetCIDR)]",
+                                "addressPrefix": "[concat('10.',variables('vnetNameList').vnetNames[copyIndex()].vnetNetwork, variables('subnetNamesList').subnetNames[copyIndex()].subnetCIDR)]",
                                 "serviceEndpoints": [
                                     {
                                         "service": "Microsoft.Storage",
