@@ -122,8 +122,7 @@
                     "count": "[length(parameters('subnetNames'))]",
                     "input": {
                         "subnetName": "[parameters('subnetNames')[copyIndex('subnetNames')].name]",
-                        "subnetCIDR": "[parameters('subnetNames')[copyIndex('subnetNames')].networkCIDR]",
-                        "subnetAddrSplit": "[split(parameters('subnetNames')[copyIndex('subnetNames')].subnetCIDR,'.')]"
+                        "subnetCIDR": "[parameters('subnetNames')[copyIndex('subnetNames')].networkCIDR]"
                     }
                 }
             ]
