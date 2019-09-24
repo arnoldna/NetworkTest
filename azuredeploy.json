@@ -36,10 +36,6 @@
       "_artifactsLocationSasToken": {
         "type": "string",
         "defaultValue": ""
-      },
-      "nsgList":{
-        "type":"array",
-        "defaultValue": []
       }
     },
     "variables": {
