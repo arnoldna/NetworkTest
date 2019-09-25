@@ -151,6 +151,23 @@
             "properties": {
                 "securityRules": "[variables('defaultSecurityRules')]"
             }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-04-01",
+            "name": "[concat('AZG-Vir', '-', variables('subnetNamesList').subnetNames[copyIndex('subnetNamesList')].subnetName, '-NSG')]",
+            "comments": "Creation of custom network security group for each VNet. Additionally this takes into account any custom rules defined in the parameters file.",
+            "location": "usgovirginia",
+            "tags": {
+                "displayName": "[concat('AZG-Vir', '-', variables('subnetNamesList').subnetNames[copyIndex('subnetNamesList')].subnetName, '-NSG')]"
+            },
+            "copy":{
+                "name": "subnetNamesList",
+                "count": "[length(parameters('subnetNames'))]"
+            },
+            "properties": {
+                "securityRules": "[variables('defaultSecurityRules')]"
+            }
         }
     ],
     "outputs": {
