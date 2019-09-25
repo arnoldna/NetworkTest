@@ -140,7 +140,7 @@
             "apiVersion": "2019-04-01",
             "name": "[concat('AZG-', variables('vnetNameList').vnetNames[copyIndex()].vnetRegion, '-', variables('subnetNamesList').subnetNames[copyIndex('subnetNamesList')].subnetName, '-NSG')]",
             "comments": "Creation of custom network security group for each VNet. Additionally this takes into account any custom rules defined in the parameters file.",
-            "location": "[variables('vnetNameList').vnetNames[copyIndex()].vnetLocation]",
+            "location": "usgovarizona",
             "tags": {
                 "displayName": "[concat('AZG-', variables('vnetNameList').vnetNames[copyIndex()].vnetRegion, '-', variables('subnetNamesList').subnetNames[copyIndex('subnetNamesList')].subnetName, '-NSG')]"
             },
