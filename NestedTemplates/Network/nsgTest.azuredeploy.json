@@ -1,0 +1,76 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "ParameterArray": {
+            "type": "array"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "name": "[concat('Deploy-Nsg-',parameters('ParameterArray')[copyIndex('Nsgs')].name)]",
+            "subscriptionId": "[parameters('ParameterArray')[copyIndex('Nsgs')].SubscriptionId]",
+            "resourceGroup": "[parameters('ParameterArray')[copyIndex('Nsgs')].ResourceGroupName]",
+            "copy": {
+                "name": "Nsgs",
+                "count": "[length(parameters('ParameterArray'))]"
+            },
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+                    "contentVersion": "1.0.0.0",
+                    "variables": {},
+                    "resources": [
+                        {
+                            "apiVersion": "2017-10-01",
+                            "type": "Microsoft.Network/networkSecurityGroups",
+                            "name": "[concat('Nsg-',parameters('ParameterArray')[copyIndex('Nsgs')].name)]",
+                            "location": "[parameters('ParameterArray')[copyIndex('Nsgs')].Region]",
+                            "properties": {
+                                "copy": [
+                                    {
+                                        "name": "securityRules",
+                                        "count": "[length(parameters('ParameterArray')[copyIndex('Nsgs')].SecurityRules)]",
+                                        "input": {
+                                            "name": "[parameters('ParameterArray')[copyIndex('Nsgs')].SecurityRules[copyIndex('securityRules')].name]",
+                                            "properties": {
+                                                "protocol": "[parameters('ParameterArray')[copyIndex('Nsgs')].SecurityRules[copyIndex('securityRules')].protocol]",
+                                                "sourcePortRange": "[parameters('ParameterArray')[copyIndex('Nsgs')].SecurityRules[copyIndex('securityRules')].sourcePortRange]",
+                                                "destinationPortRange": "[parameters('ParameterArray')[copyIndex('Nsgs')].SecurityRules[copyIndex('securityRules')].destinationPortRange]",
+                                                "access": "[parameters('ParameterArray')[copyIndex('Nsgs')].SecurityRules[copyIndex('securityRules')].access]",
+                                                "sourceAddressPrefix": "[parameters('ParameterArray')[copyIndex('Nsgs')].SecurityRules[copyIndex('securityRules')].sourceAddressPrefix]",
+                                                "destinationAddressPrefix": "[parameters('ParameterArray')[copyIndex('Nsgs')].SecurityRules[copyIndex('securityRules')].destinationAddressPrefix]",
+                                                "direction": "[parameters('ParameterArray')[copyIndex('Nsgs')].SecurityRules[copyIndex('securityRules')].direction]",
+                                                "priority": "[parameters('ParameterArray')[copyIndex('Nsgs')].SecurityRules[copyIndex('securityRules')].priority]"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "apiVersion": "2018-03-01",
+                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                            "name": "[concat(parameters('ParameterArray')[copyIndex('Nsgs')].VnetName, '/', parameters('ParameterArray')[copyIndex('Nsgs')].name)]",
+                            "location": "[parameters('ParameterArray')[copyIndex('Nsgs')].Region]",
+                            "dependsOn": [
+                                "[concat('Nsg-',parameters('ParameterArray')[copyIndex('Nsgs')].name)]"
+                            ],
+                            "properties": {
+                                "addressPrefix": "[parameters('ParameterArray')[copyIndex('Nsgs')].addressPrefix]",
+                                "networkSecurityGroup": {
+                                    "id": "[resourceId(parameters('ParameterArray')[copyIndex('Nsgs')].SubscriptionId,parameters('ParameterArray')[copyIndex('Nsgs')].ResourceGroupName,'Microsoft.Network/networkSecurityGroups',concat('Nsg-',parameters('ParameterArray')[copyIndex('Nsgs')].name))]"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
