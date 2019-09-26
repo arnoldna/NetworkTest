@@ -42,10 +42,10 @@
       "templateUriKeyVault": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/KeyVault/Vaults/', 'azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
       "templateUriKeyVaultDiagnostics": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/KeyVault/Vaults/', 'kvDiagnosticLogs.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
       "parametersKeyVault": {
-        "keyVaultParameters": {
+        "kvParameters": {
           "value": [
             {
-              "resourceGroup": "prod-network",
+              "resourceGroup": "Prod-Network",
               "keyVaultName": "TestKeyVaultnatea",
               "objectId": "e716ee4d-e6d2-435e-9c62-09735b62f1ed",
               "tenantId": "e8bb4543-f329-4b30-8b09-e02f973bbc90"
