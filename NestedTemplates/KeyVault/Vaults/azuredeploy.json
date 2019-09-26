@@ -2,29 +2,17 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "parametersKeyVault":{
+    "resourceGroup": {
       "type": "array"
     },
     "keyVaultName": {
-      "type": "string",
-      "defaultValue": "testkveradsf",
-      "metadata": {
-        "description": "Name of the Vault"
-      }
+      "type": "array"
     },
     "tenantId": {
-      "type": "string",
-      "defaultValue":"43243701-7aa8-421a-a131-fed3f11104c8",
-      "metadata": {
-        "description": "Tenant Id of the subscription. Get using Get-AzSubscription cmdlet or Get Subscription API"
-      }
+      "type": "array"
     },
     "objectId": {
-      "type": "string",
-      "defaultValue":"ad2b9e43-a7c5-441c-9cca-cab310782acd",
-      "metadata": {
-        "description": "Object Id of the AD user/Group. Get using Get-AzADUser or Get-AzADServicePrincipal cmdlets"
-      }
+      "type": "array"
     },
     "keysPermissions": {
       "type": "array",
@@ -94,12 +82,12 @@
       "copy": [
         {
           "name": "kvParams",
-          "count": "[length(parameters('parametersKeyVault'))]",
+          "count": "[length(parameters('kvParameters'))]",
           "input":{
-            "kvResourceGroup": "[parameters('parametersKeyVault')[copyIndex('kvParams')].resourceGroup]",
-            "kvName": "[parameters('parametersKeyVault')[copyIndex('kvParams')].keyVaultName]",
-            "kvObjectId": "[parameters('parametersKeyVault')[copyIndex('kvParams')].objectId]",
-            "kvTenantId": "[parameters('parametersKeyVault')[copyIndex('kvParams')].tenantId]"
+            "kvResourceGroup": "[parameters('kvParameters')[copyIndex('kvParams')].resourceGroup]",
+            "kvName": "[parameters('kvParameters')[copyIndex('kvParams')].keyVaultName]",
+            "kvObjectId": "[parameters('kvParameters')[copyIndex('kvParams')].objectId]",
+            "kvTenantId": "[parameters('kvParameters')[copyIndex('kvParams')].tenantId]"
           }
         }
       ]
@@ -115,7 +103,7 @@
       },
       "copy":{
         "name": "kvCopyVariables",
-        "count": "[length(parameters('parametersKeyVault'))]"
+        "count": "[length(parameters('kvParameters'))]"
     },
       "properties": {
         "enabledForDeployment": "[parameters('enableVaultForDeployment')]",
