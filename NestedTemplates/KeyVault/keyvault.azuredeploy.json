@@ -45,8 +45,8 @@
         "keyVaultParameters": {
           "value": [
             {
-              "resourceGroup": "AZG-Vir-Prod-Network-KV",
-              "keyVaultName": "TestKeyVault",
+              "resourceGroup": "prod-network",
+              "keyVaultName": "TestKeyVaultnatea",
               "objectId": "e716ee4d-e6d2-435e-9c62-09735b62f1ed",
               "tenantId": "e8bb4543-f329-4b30-8b09-e02f973bbc90"
             }
