@@ -39,7 +39,7 @@
       }
     },
     "variables": {
-      "templateUriKeyVault": "[concat(parameters('_artifactsLocation'), '/Vaults/KeyVault/NestedTemplates', 'azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
+      "templateUriKeyVault": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/KeyVault/Vaults', 'azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
       "parametersKeyVault": {
         "keyVaultParameters": {
           "value": [
