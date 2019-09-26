@@ -5,12 +5,6 @@
       "keyVaultParameters": {
         "type": "array"
       },
-      "keyVaultName": {
-        "type": "string",
-        "metadata": {
-          "description": "Name of the Vault"
-        }
-      },
       "tenantId": {
         "type": "string",
         "defaultValue": "43243701-7aa8-421a-a131-fed3f11104c8",
