@@ -110,8 +110,8 @@
           },
           "enabledForDeployment": "[parameters('enableVaultForDeployment')]",
           "enabledForTemplateDeployment": "true",
-          "enableSoftDelete": "true",
-          "enablePurgeProtection": "true",
+          "enableSoftDelete": "false",
+          "enablePurgeProtection": "false",
           "tenantId": "[variables('kvVariables').kvParams[copyIndex('kvCopy')].azureActiveDirectoryTenant]",
           "accessPolicies": [
             {
@@ -122,16 +122,6 @@
                 "secrets": "[parameters('secretsPermissions')]",
                 "certificates": "[parameters('certificatePermissions')]",
                 "storage": "[parameters('storagePermissions')]"
-              }
-            },
-            {
-              "tenantId": "[variables('kvVariables').kvParams[copyIndex()].azureActiveDirectoryTenant]",
-              "objectId": "[variables('kvVariables').kvParams[copyIndex()].azureActiveDirectoryGroup]",
-              "permissions": {
-                "keys": "[parameters('auditPermissions')]",
-                "secrets": "[parameters('auditPermissions')]",
-                "certificates": "[parameters('auditPermissions')]",
-                "storage": "[parameters('auditPermissions')]"
               }
             }
           ],
