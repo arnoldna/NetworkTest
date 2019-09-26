@@ -97,10 +97,10 @@
         "count": "[length(parameters('kvParameters'))]"
     },
       "properties": {
-        "enabledForDeployment": "[parameters('enableVaultForDeployment')]",
+        "enabledForDeployment": "true",
         "enabledForTemplateDeployment": "true",
-        "enableSoftDelete": "true",
-        "enablePurgeProtection": "true",
+        "enableSoftDelete": "false",
+        "enablePurgeProtection": "false",
         "tenantId": "[variables('kvCopyVariables').kvParams[copyIndex('kvCopyVariables')].kvTenantId]",
         "accessPolicies": [
           {
