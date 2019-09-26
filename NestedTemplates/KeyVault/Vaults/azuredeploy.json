@@ -144,7 +144,6 @@
           "count": "[length(parameters('keyVaultParameters'))]"
         },
         "tags": {
-          "KeyVaultLogs": "[parameters('storageAccountName')]"
         },
         "properties": {
           "copy": {
