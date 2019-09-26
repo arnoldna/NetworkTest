@@ -41,7 +41,7 @@
     "variables": {
       "templateUriNetwork": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'network.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
       "templateUriNSG": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'nsg.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
-      "templateUriKeyVault": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/KeyVault/', 'keyvault.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
+      "templateUriKeyVault": "[concat(parameters('_artifactsLocation'), '/Vaults/KeyVault/NestedTemplates', 'keyvault.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
       "parametersNetwork": {
         "vnetNames": {
             "value": [
