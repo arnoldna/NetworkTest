@@ -73,34 +73,6 @@
         "metadata": {
           "description": "Specifies if the vault is enabled for a VM deployment"
         }
-      },
-      "logsRetentionInDays": {
-        "type": "int",
-        "defaultValue": 0,
-        "metadata": {
-          "description": "Specifies the number of days that logs are gonna be kept. If you do not want to apply any retention policy and retain data forever, set value to 0."
-        }
-      },
-      "storageAccountName": {
-        "type": "string",
-        "defaultValue": "secdevtestlarchivelogs",
-        "metadata": {
-          "description": "Specifies the storage account name for the log files."
-        }
-      },
-      "storageAccountSubscription": {
-        "type": "string",
-        "defaultValue": "27ee075f-8fcc-4236-9bfa-998c6e1421df",
-        "metadata": {
-          "description": "Specifies the storage account subscription ID."
-        }
-      },
-      "storageAccountRG": {
-        "type": "string",
-        "defaultValue": "AZG-SecDevTest-SecurityRG",
-        "metadata": {
-          "description": "Specifies the storage account's resoruce group name."
-        }
       }
     },
     "variables": {
@@ -140,7 +112,7 @@
           "enabledForTemplateDeployment": "true",
           "enableSoftDelete": "true",
           "enablePurgeProtection": "true",
-          "tenantId": "[parameters('tenantId')]",
+          "tenantId": "[variables('kvVariables').kvParams[copyIndex('kvCopy')].azureActiveDirectoryTenant]",
           "accessPolicies": [
             {
               "tenantId": "[variables('kvVariables').kvParams[copyIndex()].azureActiveDirectoryTenant]",
