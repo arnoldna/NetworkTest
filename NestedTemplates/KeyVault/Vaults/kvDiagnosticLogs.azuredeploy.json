@@ -1,0 +1,170 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "keyVaultParameters": {
+        "type": "array"
+      },
+      "keyVaultName": {
+        "type": "string",
+        "metadata": {
+          "description": "Name of the Vault"
+        }
+      },
+      "tenantId": {
+        "type": "string",
+        "defaultValue": "43243701-7aa8-421a-a131-fed3f11104c8",
+        "metadata": {
+          "description": "Tenant Id of the subscription. Get using Get-AzSubscription cmdlet or Get Subscription API"
+        }
+      },
+      "objectId": {
+        "type": "string",
+        "defaultValue": "ad2b9e43-a7c5-441c-9cca-cab310782acd",
+        "metadata": {
+          "description": "Object Id of the AD user/Group. Get using Get-AzADUser or Get-AzADServicePrincipal cmdlets"
+        }
+      },
+      "keysPermissions": {
+        "type": "array",
+        "defaultValue": [ "all" ],
+        "metadata": {
+          "description": "Permissions to keys in the vault. Valid values are: all, create, import, update, get, list, delete, backup, restore, encrypt, decrypt, wrapkey, unwrapkey, sign, and verify."
+        }
+      },
+      "secretsPermissions": {
+        "type": "array",
+        "defaultValue": [ "all" ],
+        "metadata": {
+          "description": "Permissions to secrets in the vault. Valid values are: all, get, set, list, and delete."
+        }
+      },
+      "certificatePermissions": {
+        "type": "array",
+        "defaultValue": [ "all" ],
+        "metadata": {
+          "description": "Permissions to certificates - get, list, delete, create, import, update, managecontacts, getissuers, listissuers, setissuers, deleteissuers, manageissuers, recover, purge, backup, restore"
+        }
+      },
+      "storagePermissions": {
+        "type": "array",
+        "defaultValue": [ "all" ],
+        "metadata": {
+          "description": "Permissions to storage accounts - get, list, delete, set, update, regeneratekey, recover, purge, backup, restore, setsas, listsas, getsas, deletesas"
+        }
+      },
+      "auditPermissions": {
+        "type": "string",
+        "defaultValue": "list",
+        "metadata": {
+          "description": "List permission to read Key Vault metadata like creattin date, expiration date, tags, and whether the object is enabled for use."
+        }
+      },
+      "skuName": {
+        "type": "string",
+        "defaultValue": "Standard",
+        "allowedValues": [
+          "Standard",
+          "Premium"
+        ],
+        "metadata": {
+          "description": "SKU for the vault"
+        }
+      },
+      "allowedIpAddress": {
+        "type": "object",
+        "defaultValue": {
+          "ipAddress": [
+            { "value": "155.95.87.0/24" },
+            { "value": "155.95.98.0/24" }
+          ]
+        },
+        "metadata": {
+          "description": "Allowed IP addresses"
+        }
+      },
+      "enableVaultForDeployment": {
+        "type": "bool",
+        "defaultValue": true,
+        "allowedValues": [
+          true,
+          false
+        ],
+        "metadata": {
+          "description": "Specifies if the vault is enabled for a VM deployment"
+        }
+      },
+      "logsRetentionInDays": {
+        "type": "int",
+        "defaultValue": 0,
+        "metadata": {
+          "description": "Specifies the number of days that logs are gonna be kept. If you do not want to apply any retention policy and retain data forever, set value to 0."
+        }
+      },
+      "storageAccountName": {
+        "type": "string",
+        "defaultValue": "nateststorage",
+        "metadata": {
+          "description": "Specifies the storage account name for the log files."
+        }
+      },
+      "storageAccountSubscription": {
+        "type": "string",
+        "defaultValue": "cff004d9-5989-432e-8801-bd8539bf7ee4",
+        "metadata": {
+          "description": "Specifies the storage account subscription ID."
+        }
+      },
+      "storageAccountRG": {
+        "type": "string",
+        "defaultValue": "Prod-Security-GDIT",
+        "metadata": {
+          "description": "Specifies the storage account's resoruce group name."
+        }
+      }
+    },
+    "variables": {
+      "kvVariables": {
+        "copy": [
+          {
+            "name": "kvParams",
+            "count": "[length(parameters('keyVaultParameters'))]",
+            "input": {
+              "resoruceGroupName": "[parameters('keyVaultParameters')[copyIndex('kvParams')].resourceGroup]",
+              "keyVaultName": "[parameters('keyVaultParameters')[copyIndex('kvParams')].keyVaultName]",
+              "azureActiveDirectoryGroup": "[parameters('keyVaultParameters')[copyIndex('kvParams')].objectID]",
+              "azureActiveDirectoryTenant": "[parameters('keyVaultParameters')[copyIndex('kvParams')].tenantID]"
+            }
+          }
+        ]
+      }
+    },
+    "resources": [
+        {
+        "type": "Microsoft.KeyVault/vaults/providers/diagnosticsettings",
+        "name": "[concat(variables('kvVariables').kvCopy[copyIndex()].keyVaultName, '/Microsoft.Insights/service')]",
+        "apiVersion": "2016-09-01",
+        "location": "[resourceGroup().location]",
+        "copy": {
+            "name": "kvCopy",
+            "count": "[length(parameters('keyVaultParameters'))]"
+        },
+        "dependsOn": [
+            "[resourceId('Microsoft.KeyVault/vaults', variables('kvVariables').kvCopy[copyIndex()].keyVaultName)]"
+        ],
+        "properties": {
+            "storageAccountId": "[resourceId(parameters('storageAccountSubscription'), parameters('storageAccountRG'), 'Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+            "logs": [
+            {
+                "category": "AuditEvent",
+                "enabled": true,
+                "retentionPolicy": {
+                "enabled": true,
+                "days": "[parameters('logsRetentionInDays')]"
+                }
+            }
+            ]
+        }
+        }
+    ]
+  }

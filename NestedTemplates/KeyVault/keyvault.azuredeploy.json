@@ -40,6 +40,7 @@
     },
     "variables": {
       "templateUriKeyVault": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/KeyVault/Vaults/', 'azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
+      "templateUriKeyVaultDiagnostics": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/KeyVault/Vaults/', 'kvDiagnosticLogs.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
       "parametersKeyVault": {
         "keyVaultParameters": {
           "value": [
@@ -62,6 +63,18 @@
           "mode": "Incremental",
           "templateLink": {
             "uri": "[variables('templateUriKeyVault')]"
+          },
+          "parameters": "[variables('parametersKeyVault')]"
+        }
+      },
+      {
+        "name": "deployKeyVaultsDiagnostics",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2017-05-10",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('templateUriKeyVaultDiagnostics')]"
           },
           "parameters": "[variables('parametersKeyVault')]"
         }
