@@ -53,7 +53,7 @@
     "resources": [
         {
         "type": "Microsoft.KeyVault/vaults/providers/diagnosticsettings",
-        "name": "[concat(variables('kvVariables').kvCopy[copyIndex()].keyVaultName, '/Microsoft.Insights/service')]",
+        "name": "[concat(variables('kvVariables').kvParams[copyIndex()].keyVaultName, '/Microsoft.Insights/service')]",
         "apiVersion": "2016-09-01",
         "location": "[resourceGroup().location]",
         "copy": {
