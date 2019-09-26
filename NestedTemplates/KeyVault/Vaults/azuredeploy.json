@@ -101,7 +101,7 @@
         "enabledForTemplateDeployment": "true",
         "enableSoftDelete": "true",
         "enablePurgeProtection": "true",
-        "tenantId": "[parameters('tenantId')]",
+        "tenantId": "[variables('kvCopyVariables').kvParams[copyIndex('kvCopyVariables')].kvTenantId]",
         "accessPolicies": [
           {
             "tenantId": "[parameters('tenantId')]",
