@@ -150,7 +150,6 @@
             "count": "[length(parameters('keyVaultParameters'))]"
         },
         "dependsOn": [
-            "[resourceId('Microsoft.KeyVault/vaults', variables('kvVariables').kvCopy[copyIndex()].keyVaultName)]"
         ],
         "properties": {
             "storageAccountId": "[resourceId(parameters('storageAccountSubscription'), parameters('storageAccountRG'), 'Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
