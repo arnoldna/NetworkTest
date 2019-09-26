@@ -147,6 +147,10 @@
           "KeyVaultLogs": "[parameters('storageAccountName')]"
         },
         "properties": {
+          "copy": {
+            "name": "kvCopy",
+            "count": "[length(parameters('keyVaultParameters'))]"
+          },
           "enabledForDeployment": "[parameters('enableVaultForDeployment')]",
           "enabledForTemplateDeployment": "true",
           "enableSoftDelete": "true",
