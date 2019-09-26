@@ -103,7 +103,7 @@
       },
       "storageAccountName": {
         "type": "string",
-        "defaultValue": "nateststorage",
+        "defaultValue": "natetest2",
         "metadata": {
           "description": "Specifies the storage account name for the log files."
         }

@@ -197,35 +197,7 @@
               }
             ]
           }
-        },
-        "resources": [
-          {
-            "type": "Microsoft.KeyVault/vaults/providers/diagnosticsettings",
-            "name": "[concat(variables('kvVariables').kvCopy[copyIndex()].keyVaultName, '/Microsoft.Insights/service')]",
-            "apiVersion": "2016-09-01",
-            "location": "[resourceGroup().location]",
-            "copy": {
-              "name": "kvCopy",
-              "count": "[length(parameters('keyVaultParameters'))]"
-            },
-            "dependsOn": [
-              "[resourceId('Microsoft.KeyVault/vaults', variables('kvVariables').kvCopy[copyIndex()].keyVaultName)]"
-            ],
-            "properties": {
-              "storageAccountId": "[resourceId(parameters('storageAccountSubscription'), parameters('storageAccountRG'), 'Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
-              "logs": [
-                {
-                  "category": "AuditEvent",
-                  "enabled": true,
-                  "retentionPolicy": {
-                    "enabled": true,
-                    "days": "[parameters('logsRetentionInDays')]"
-                  }
-                }
-              ]
-            }
-          }
-        ]
+        }
       }
     ]
   }
