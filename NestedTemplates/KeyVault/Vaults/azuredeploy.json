@@ -136,7 +136,7 @@
     "resources": [
       {
         "type": "Microsoft.KeyVault/vaults",
-        "name": "[variables('kvVariables').kvCopy[copyIndex()].keyVaultName]",
+        "name": "[variables('kvVariables')[copyIndex()].keyVaultName]",
         "apiVersion": "2018-02-14",
         "location": "[resourceGroup().location]",
         "copy": {
@@ -154,8 +154,8 @@
           "tenantId": "[parameters('tenantId')]",
           "accessPolicies": [
             {
-              "tenantId": "[variables('kvVariables').kvCopy[copyIndex()].azureActiveDirectoryTenant]",
-              "objectId": "[variables('kvVariables').kvCopy[copyIndex()].azureActiveDirectoryGroup]",
+              "tenantId": "[variables('kvVariables')[copyIndex()].azureActiveDirectoryTenant]",
+              "objectId": "[variables('kvVariables')[copyIndex()].azureActiveDirectoryGroup]",
               "permissions": {
                 "keys": "[parameters('keysPermissions')]",
                 "secrets": "[parameters('secretsPermissions')]",
@@ -164,8 +164,8 @@
               }
             },
             {
-              "tenantId": "[variables('kvVariables').kvCopy[copyIndex()].azureActiveDirectoryTenant]",
-              "objectId": "[variables('kvVariables').kvCopy[copyIndex()].azureActiveDirectoryGroup]",
+              "tenantId": "[variables('kvVariables')[copyIndex()].azureActiveDirectoryTenant]",
+              "objectId": "[variables('kvVariables')[copyIndex()].azureActiveDirectoryGroup]",
               "permissions": {
                 "keys": "[parameters('auditPermissions')]",
                 "secrets": "[parameters('auditPermissions')]",
