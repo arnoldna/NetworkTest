@@ -136,7 +136,7 @@
     "resources": [
       {
         "type": "Microsoft.KeyVault/vaults",
-        "name": "[variables('kvVariables').kvParams[copyIndex('kvCopy')].keyVaultName]",
+        "name": "[variables('kvVariables').kvParams[copyIndex()].keyVaultName]",
         "apiVersion": "2018-02-14",
         "location": "[resourceGroup().location]",
         "copy": {
