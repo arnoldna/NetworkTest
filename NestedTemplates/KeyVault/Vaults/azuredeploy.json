@@ -5,18 +5,6 @@
     "kvParameters": {
       "type": "array"
     },
-    "resourceGroup": {
-      "type": "array"
-    },
-    "keyVaultName": {
-      "type": "array"
-    },
-    "tenantId": {
-      "type": "array"
-    },
-    "objectId": {
-      "type": "array"
-    },
     "keysPermissions": {
       "type": "array",
       "defaultValue": ["all"],
