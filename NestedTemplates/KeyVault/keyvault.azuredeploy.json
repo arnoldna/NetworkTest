@@ -39,7 +39,7 @@
       }
     },
     "variables": {
-      "templateUriNetwork": "[concat(parameters('_artifactsLocation'), '/Vaults/KeyVaults/', 'azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
+      "templateUriKeyVault": "[concat(parameters('_artifactsLocation'), '/Vaults/KeyVault/', 'azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
       "parametersKeyVault": {
         "keyVaultParameters": {
           "value": [
@@ -61,7 +61,7 @@
         "properties": {
           "mode": "Incremental",
           "templateLink": {
-            "uri": "[variables('templateUriNetwork')]"
+            "uri": "[variables('templateUriKeyVault')]"
           },
           "parameters": "[variables('parametersKeyVault')]"
         }
