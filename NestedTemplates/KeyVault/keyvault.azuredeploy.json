@@ -1,0 +1,74 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "deploymentType": {
+        "type": "string",
+        "defaultValue": "Prod",
+        "allowedValues": [
+          "Dev",
+          "Pre Prod",
+          "Prod"
+        ],
+        "metadata": {
+          "description": "Describes scope of deployment."
+        }
+      },
+      "environmentName": {
+        "type": "string",
+        "defaultValue": "prod",
+        "allowedValues": [
+          "dev",
+          "devtest",
+          "stage",
+          "test",
+          "preprod",
+          "prod"
+        ],
+        "metadata": {
+          "description": "Describes plan's pricing tier and capacity. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
+        }
+      },
+      "_artifactsLocation": {
+        "type": "string",
+        "defaultValue": "https://raw.githubusercontent.com/arnoldna/NetworkTest/user/arnoldna/DevTest"
+      },
+      "_artifactsLocationSasToken": {
+        "type": "string",
+        "defaultValue": ""
+      }
+    },
+    "variables": {
+      "templateUriNetwork": "[concat(parameters('_artifactsLocation'), '/Vaults/KeyVaults/', 'azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
+      "parametersKeyVault": {
+        "keyVaultParameters": {
+          "value": [
+            {
+              "resourceGroup": "AZG-Vir-Prod-Network-KV",
+              "keyVaultName": "TestKeyVault",
+              "objectId": "e716ee4d-e6d2-435e-9c62-09735b62f1ed",
+              "tenantId": "e8bb4543-f329-4b30-8b09-e02f973bbc90"
+            }
+          ]
+        }
+      }
+    },
+    "resources": [
+      {
+        "name": "deployKeyVaults",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2017-05-10",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('templateUriNetwork')]"
+          },
+          "parameters": "[variables('parametersKeyVault')]"
+        }
+      }
+    ],
+    "outputs": {
+      }
+    }
+  }
+    
