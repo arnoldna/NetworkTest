@@ -66,18 +66,6 @@
           },
           "parameters": "[variables('parametersKeyVault')]"
         }
-      },
-      {
-        "name": "deployKeyVaultsDiagnostics",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2017-05-10",
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[variables('templateUriKeyVaultDiagnostics')]"
-          },
-          "parameters": "[variables('parametersKeyVault')]"
-        }
       }
     ],
     "outputs": {
