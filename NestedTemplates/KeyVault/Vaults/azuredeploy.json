@@ -104,8 +104,8 @@
         "tenantId": "[variables('kvCopyVariables').kvParams[copyIndex('kvCopyVariables')].kvTenantId]",
         "accessPolicies": [
           {
-            "tenantId": "[parameters('tenantId')]",
-            "objectId": "[parameters('objectId')]",
+            "tenantId": "[variables('kvCopyVariables').kvParams[copyIndex('kvCopyVariables')].kvTenantId]",
+            "objectId": "[variables('kvCopyVariables').kvParams[copyIndex('kvCopyVariables')].kvObjectId]",
             "permissions": {
               "keys": "[parameters('keysPermissions')]",
               "secrets": "[parameters('secretsPermissions')]",
