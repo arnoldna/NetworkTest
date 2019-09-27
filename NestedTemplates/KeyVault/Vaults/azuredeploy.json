@@ -104,7 +104,6 @@
         "enabledForTemplateDeployment": "true",
         "enableSoftDelete": "false",
         "enablePurgeProtection": "false",
-        "tenantId": "[parameters('tenantID')]",
         "accessPolicies": [
           {
             "tenantId": "[parameters('tenantID')]",
