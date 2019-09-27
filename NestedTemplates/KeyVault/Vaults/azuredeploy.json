@@ -80,6 +80,7 @@
             "kvTenantId": "[parameters('kvParameters')[copyIndex('kvParams')].tenantId]"
           }
         }
+        
       ]
     }
   },
