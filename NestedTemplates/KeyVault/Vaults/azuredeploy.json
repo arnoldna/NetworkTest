@@ -85,7 +85,8 @@
         }
 
       ]
-    }
+    },
+    "tenantId": "e8bb4543-f329-4b30-8b09-e02f973bbc90"
   },
   "resources": [
     {
@@ -104,10 +105,10 @@
         "enabledForTemplateDeployment": "true",
         "enableSoftDelete": "false",
         "enablePurgeProtection": "false",
-        "tenantId": "[variables('kvCopyVariables').kvParams[copyIndex('kvCopyVariables')].kvTenantId]",
+        "tenantId": "[variables('tenantID')]",
         "accessPolicies": [
           {
-            "tenantId": "[parameters('')]",
+            "tenantId": "[variables('tenantID')]",
             "objectId": "[variables('kvCopyVariables').kvParams[copyIndex('kvCopyVariables')].kvObjectId]",
             "permissions": {
               "keys": "all",
