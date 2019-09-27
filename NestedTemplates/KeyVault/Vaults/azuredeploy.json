@@ -75,7 +75,6 @@
           "name": "kvParams",
           "count": "[length(parameters('kvParameters'))]",
           "input":{
-            "kvResourceGroup": "[parameters('kvParameters')[copyIndex('kvParams')].resourceGroupName]",
             "kvName": "[parameters('kvParameters')[copyIndex('kvParams')].keyVaultName]",
             "kvObjectId": "[parameters('kvParameters')[copyIndex('kvParams')].objectId]",
             "kvTenantId": "[parameters('kvParameters')[copyIndex('kvParams')].tenantId]"
