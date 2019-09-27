@@ -5,7 +5,7 @@
     "kvParameters": {
       "type": "array"
     },
-    "tenantID":{
+    "tenantIdValue":{
       "type": "string",
       "defaultValue": "e8bb4543-f329-4b30-8b09-e02f973bbc90"
     },
@@ -86,7 +86,7 @@
 
       ]
     },
-    "tenantId": "e8bb4543-f329-4b30-8b09-e02f973bbc90"
+    "tenantIdValue": "e8bb4543-f329-4b30-8b09-e02f973bbc90"
   },
   "resources": [
     {
@@ -105,10 +105,10 @@
         "enabledForTemplateDeployment": "true",
         "enableSoftDelete": "false",
         "enablePurgeProtection": "false",
-        "tenantId": "[variables('tenantID')]",
+        "tenantId": "[variables('tenantIdValue')]",
         "accessPolicies": [
           {
-            "tenantId": "[variables('tenantID')]",
+            "tenantId": "[variables('tenantIdValue')]",
             "objectId": "[variables('kvCopyVariables').kvParams[copyIndex('kvCopyVariables')].kvObjectId]",
             "permissions": {
               "keys": "all",
