@@ -104,10 +104,10 @@
         "enabledForTemplateDeployment": "true",
         "enableSoftDelete": "false",
         "enablePurgeProtection": "false",
-        "tenantId": "[variables('kvCopyVariables').kvParams[copyIndex('kvCopyVariables')].kvTenantId]",
+        "tenantId": "[parameters('tenantID')]",
         "accessPolicies": [
           {
-            "tenantId": "[parameters('')]",
+            "tenantId": "[parameters('tenantID')]",
             "objectId": "[variables('kvCopyVariables').kvParams[copyIndex('kvCopyVariables')].kvObjectId]",
             "permissions": {
               "keys": "all",
