@@ -91,7 +91,7 @@
   "resources": [
     {
       "type": "Microsoft.KeyVault/vaults",
-      "name": "[variables('kvCopyVariables').kvParams[copyIndex('kvCopyVariables')].kvName]",
+      "name": "TestKeyVaultnatea",
       "apiVersion": "2018-02-14",
       "location": "eastus",
       "tags": {
@@ -109,7 +109,7 @@
         "accessPolicies": [
           {
             "tenantId": "[parameters('tenantIDValue')]",
-            "objectId": "[variables('kvCopyVariables').kvParams[copyIndex('kvCopyVariables')].kvObjectId]",
+            "objectId": "KVTest",
             "permissions": {
               "keys": "all",
               "secrets": "all",
