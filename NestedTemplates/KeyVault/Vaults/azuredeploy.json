@@ -112,6 +112,19 @@
         "sku": {
           "name": "Standard",
           "family": "A"
+        },
+        "networkAcls": {
+          "bypass": "AzureServices",
+          "defaultAction": "Deny",
+          "copy": [
+            {
+                "name": "ipRules",
+                "count": "[length(parameters('allowedIpAddress').ipAddress)]",
+                "input": {
+                    "value": "[parameters('allowedIpAddress').ipAddress[copyIndex('ipRules')].value]"
+                }
+            }
+          ]
         }
       }
     }
