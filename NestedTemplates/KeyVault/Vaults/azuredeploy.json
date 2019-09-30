@@ -3,7 +3,8 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "kvParameters": {
-      "type": "array"
+      "type": "array",
+      "defaultValue": ["all"]
     },
     "tenantIdValue":{
       "type": "string",
@@ -101,10 +102,10 @@
         "count": "[length(parameters('kvParameters'))]"
     },
       "properties": {
-        "enabledForDeployment": "true",
-        "enabledForTemplateDeployment": "true",
-        "enableSoftDelete": "false",
-        "enablePurgeProtection": "false",
+        "enabledForDeployment": true,
+        "enabledForTemplateDeployment": true,
+        "enableSoftDelete": false,
+        "enablePurgeProtection": false,
         "tenantId": "[parameters('tenantIDValue')]",
         "accessPolicies": [
           {
