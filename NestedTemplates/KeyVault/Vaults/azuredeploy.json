@@ -4,7 +4,10 @@
   "parameters": {
     "kvParameters": {
       "type": "array",
-      "defaultValue": ["all"]
+      "defaultValue": [{
+        "keyVaultName": "TestKeyVaultnatea",
+        "objectId": "e716ee4d-e6d2-435e-9c62-09735b62f1ed"
+      }]
     },
     "tenantIdValue":{
       "type": "string",
