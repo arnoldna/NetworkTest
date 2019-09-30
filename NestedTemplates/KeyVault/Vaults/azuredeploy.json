@@ -4,10 +4,9 @@
   "parameters": {
     "kvParameters": {
       "type": "array",
-      "defaultValue": [{
-        "keyVaultName": "TestKeyVaultnatea23423",
-        "objectId": "e716ee4d-e6d2-435e-9c62-09735b62f1ed"
-      }]
+      "defaultValue": [
+          {"keyVaultName": "TestKeyVaultnatea23423", "objectId": "e716ee4d-e6d2-435e-9c62-09735b62f1ed", "tenantIdValue": "e8bb4543-f329-4b30-8b09-e02f973bbc90"}
+        ]
     },
     "objectId": {
       "type": "string",
@@ -81,13 +80,30 @@
     }
   },
   "variables": {
-    "tenantIdValue": "e8bb4543-f329-4b30-8b09-e02f973bbc90"
+    "tenantIdValue": "e8bb4543-f329-4b30-8b09-e02f973bbc90",
+    "kvParametersCopy": {
+      "copy": [
+        {
+          "name": "kvCopy",
+          "count": "[length(parameters('kvParameters'))]",
+          "input": {
+              "vaultName": "[parameters('kvParameters')[copyIndex('kvCopy')].keyVaultName]",
+              "objectID": "[parameters('kvParameters')[copyIndex('kvCopy')].objectID]",
+              "tenantIdValue": "[parameters('kvParameters')[copyIndex('kvCopy')].tenantIdValue]"
+          }
+        }
+      ]
+    }
   },
   "resources": [
     {
       "type": "Microsoft.KeyVault/vaults",
-      "name": "TestKeyVaultnatea23423",
+      "name": "[variables('kvParametersCopy').kvCopy[copyindex('kvLocalCopy')].vaultName]",
       "apiVersion": "2018-02-14",
+      "copy": {
+        "name": "kvLocalCopy",
+        "count":"[length(parameters('kvParameters'))]"
+    },
       "location": "eastus",
       "tags": {
       },
@@ -96,11 +112,11 @@
         "enabledForTemplateDeployment": true,
         "enableSoftDelete": true,
         "enablePurgeProtection": true,
-        "tenantId": "[variables('tenantIDValue')]",
+        "tenantId": "[variables('kvParametersCopy').kvCopy[copyindex('kvLocalCopy')].tenantIdValue]",
         "accessPolicies": [
           {
-            "tenantId": "[variables('tenantIdValue')]",
-            "objectId": "[parameters('objectId')]",
+            "tenantId": "[variables('kvParametersCopy').kvCopy[copyindex('kvLocalCopy')].tenantIdValue]",
+            "objectId": "[variables('kvParametersCopy').kvCopy[copyindex('kvLocalCopy')].objectID]",
             "permissions": {
               "keys": "[parameters('keysPermissions')]",
               "secrets": "[parameters('secretsPermissions')]",
