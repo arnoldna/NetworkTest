@@ -44,7 +44,35 @@
           "metadata": {
             "description": "Allowed IP addresses"
           }
-      }
+      },
+      "logsRetentionInDays": {
+        "type": "int",
+        "defaultValue": 0,
+        "metadata": {
+            "description": "Specifies the number of days that logs are gonna be kept. If you do not want to apply any retention policy and retain data forever, set value to 0."
+        }
+      },
+      "storageAccountName":{
+          "type": "string",
+          "defaultValue": "natetest2",
+          "metadata": {
+            "description": "Specifies the storage account name for the log files."
+        }
+      },
+      "storageAccountSubscription":{
+        "type": "string",
+        "defaultValue": "cff004d9-5989-432e-8801-bd8539bf7ee4",
+        "metadata": {
+          "description": "Specifies the storage account subscription ID."
+        }
+      },
+      "storageAccountRG":{
+        "type": "string",
+        "defaultValue": "Prod-Security",
+        "metadata": {
+          "description": "Specifies the storage account's resoruce group name."
+            }
+        }
     },
     "variables": {
       "kvParametersCopy": {
@@ -109,6 +137,31 @@
             ]
           }
         }
-      }
+      },
+      {
+        "type": "Microsoft.KeyVault/vaults/providers/diagnosticsettings",
+        "name": "[concat(variables('kvParametersCopy').kvCopy[copyindex('kvLocalCopy')].vaultName, '/Microsoft.Insights/service')]",
+        "apiVersion": "2016-09-01",
+        "location": "[resourceGroup().location]",
+        "copy": {
+            "name": "kvCopy",
+            "count": "[length(parameters('kvParameters'))]"
+        },
+        "dependsOn": [
+        ],
+        "properties": {
+            "storageAccountId": "[resourceId(parameters('storageAccountSubscription'), parameters('storageAccountRG'), 'Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+            "logs": [
+            {
+                "category": "AuditEvent",
+                "enabled": true,
+                "retentionPolicy": {
+                "enabled": true,
+                "days": "[parameters('logsRetentionInDays')]"
+                }
+            }
+            ]
+        }
+        }
     ]
 }
