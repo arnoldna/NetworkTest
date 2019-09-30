@@ -10,7 +10,7 @@
       }]
     },
     "objectId": {
-      "value": "string",
+      "type": "string",
       "defaultValue": "e716ee4d-e6d2-435e-9c62-09735b62f1ed"
     },
     "tenantIdValue":{
