@@ -94,6 +94,8 @@
       "properties": {
         "enabledForDeployment": true,
         "enabledForTemplateDeployment": true,
+        "enableSoftDelete": true,
+        "enablePurgeProtection": true,
         "tenantId": "[parameters('tenantIDValue')]",
         "sku": {
           "name": "Standard",
