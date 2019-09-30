@@ -43,7 +43,8 @@
       "parametersKeyVault": {
         "kvParameters": {
           "value": [
-            {"keyVaultName": "TestKeyVaultnatea23423", "objectId": "e716ee4d-e6d2-435e-9c62-09735b62f1ed", "tenantIdValue": "e8bb4543-f329-4b30-8b09-e02f973bbc90"}
+            {"keyVaultName": "TestKeyVaultnatea23423", "objectId": "e716ee4d-e6d2-435e-9c62-09735b62f1ed", "tenantIdValue": "e8bb4543-f329-4b30-8b09-e02f973bbc90"},
+            {"keyVaultName": "TestKeyVaultnatea2342388", "objectId": "e716ee4d-e6d2-435e-9c62-09735b62f1ed", "tenantIdValue": "e8bb4543-f329-4b30-8b09-e02f973bbc90"}
           ]
         }
       }
