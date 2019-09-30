@@ -9,6 +9,10 @@
         "objectId": "e716ee4d-e6d2-435e-9c62-09735b62f1ed"
       }]
     },
+    "objectId": {
+      "value": "string",
+      "defaultVaule": "e716ee4d-e6d2-435e-9c62-09735b62f1ed"
+    },
     "tenantIdValue":{
       "type": "string",
       "defaultValue": "e8bb4543-f329-4b30-8b09-e02f973bbc90"
@@ -113,7 +117,7 @@
         "accessPolicies": [
           {
             "tenantId": "[parameters('tenantIDValue')]",
-            "objectId": "KVTest",
+            "objectId": "[parameters('objectID')]",
             "permissions": {
               "keys": "all",
               "secrets": "all",
