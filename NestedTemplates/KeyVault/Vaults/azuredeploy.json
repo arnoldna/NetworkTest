@@ -5,14 +5,6 @@
       "kvParameters": {
         "type": "array"
       },
-    "objectId": {
-      "type": "string",
-      "defaultValue": "e716ee4d-e6d2-435e-9c62-09735b62f1ed"
-    },
-    "tenantIdValue":{
-      "type": "string",
-      "defaultValue": "e8bb4543-f329-4b30-8b09-e02f973bbc90"
-    },
     "keysPermissions": {
       "type": "array",
       "defaultValue": ["all"],
@@ -63,17 +55,6 @@
         "metadata": {
           "description": "Allowed IP addresses"
         }        
-    },
-    "enableVaultForDeployment": {
-      "type": "bool",
-      "defaultValue": true,
-      "allowedValues": [
-        true,
-        false
-      ],
-      "metadata": {
-        "description": "Specifies if the vault is enabled for a VM deployment"
-      }
     }
   },
   "variables": {
