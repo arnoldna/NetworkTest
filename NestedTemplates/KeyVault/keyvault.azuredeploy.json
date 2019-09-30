@@ -18,11 +18,7 @@
         "type": "string",
         "defaultValue": "prod",
         "allowedValues": [
-          "dev",
           "devtest",
-          "stage",
-          "test",
-          "preprod",
           "prod"
         ],
         "metadata": {
