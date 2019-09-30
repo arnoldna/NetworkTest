@@ -144,7 +144,7 @@
         "apiVersion": "2016-09-01",
         "location": "[resourceGroup().location]",
         "copy": {
-            "name": "kvCopy",
+            "name": "kvLocalCopy",
             "count": "[length(parameters('kvParameters'))]"
         },
         "dependsOn": [
