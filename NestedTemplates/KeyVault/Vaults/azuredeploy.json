@@ -11,7 +11,7 @@
     },
     "objectId": {
       "value": "string",
-      "defaultVaule": "e716ee4d-e6d2-435e-9c62-09735b62f1ed"
+      "defaultValue": "e716ee4d-e6d2-435e-9c62-09735b62f1ed"
     },
     "tenantIdValue":{
       "type": "string",
@@ -81,19 +81,6 @@
     }
   },
   "variables": {
-    "kvCopyVariables":{
-      "copy": [
-        {
-          "name": "kvParams",
-          "count": "[length(parameters('kvParameters'))]",
-          "input":{
-            "kvName": "[parameters('kvParameters')[copyIndex('kvParams')].keyVaultName]",
-            "kvObjectId": "[parameters('kvParameters')[copyIndex('kvParams')].objectId]"
-          }
-        }
-
-      ]
-    },
     "tenantIdValue": "e8bb4543-f329-4b30-8b09-e02f973bbc90"
   },
   "resources": [
