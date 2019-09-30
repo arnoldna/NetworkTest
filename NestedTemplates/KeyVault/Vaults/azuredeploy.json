@@ -96,7 +96,19 @@
         "enabledForTemplateDeployment": true,
         "enableSoftDelete": true,
         "enablePurgeProtection": true,
-        "tenantId": "[parameters('tenantIDValue')]",
+        "tenantId": "[variables('tenantIDValue')]",
+        "accessPolicies": [
+          {
+            "tenantId": "[variables('tenantIdValue')]",
+            "objectId": "[parameters('objectId')]",
+            "permissions": {
+              "keys": "[parameters('keysPermissions')]",
+              "secrets": "[parameters('secretsPermissions')]",
+              "certificates": "[parameters('certificatePermissions')]",
+              "storage": "[parameters('storagePermissions')]"
+            }
+          }
+        ],
         "sku": {
           "name": "Standard",
           "family": "A"
