@@ -5,7 +5,7 @@
     "kvParameters": {
       "type": "array",
       "defaultValue": [{
-        "keyVaultName": "TestKeyVaultnatea",
+        "keyVaultName": "TestKeyVaultnatea23423",
         "objectId": "e716ee4d-e6d2-435e-9c62-09735b62f1ed"
       }]
     },
@@ -94,8 +94,6 @@
       "properties": {
         "enabledForDeployment": true,
         "enabledForTemplateDeployment": true,
-        "enableSoftDelete": false,
-        "enablePurgeProtection": false,
         "tenantId": "[parameters('tenantIDValue')]",
         "sku": {
           "name": "Standard",
