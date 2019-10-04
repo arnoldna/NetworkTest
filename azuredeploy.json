@@ -42,144 +42,143 @@
       "templateUriNetwork": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'network.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
       "templateUriNSG": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/Network/', 'nsg.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
       "templateUriKeyVault": "[concat(parameters('_artifactsLocation'), '/NestedTemplates/KeyVault/Vaults', 'keyvault.azuredeploy.json', parameters('_artifactsLocationSasToken'))]",
-       "prod": {
-      "vnetNames": {
-        "value": [
-          {
-            "region": "Az",
-            "locationName": "usgovarizona",
-            "networkName": "DemoApp",
-            "vnetNumber": 1,
-            "ventNetworkOctet": "243",
-            "network": "10.243.32.0/20"
-          },
-          {
-            "region": "Vir",
-            "locationName": "usgovvirginia",
-            "networkName": "DemoApp",
-            "vnetNumber": 1,
-            "ventNetworkOctet": "242",
-            "network": "10.242.32.0/20"
-          }
-        ]
+      "prod": {
+        "vnetNames": {
+          "value": [
+            {
+              "region": "Az",
+              "locationName": "usgovarizona",
+              "networkName": "DemoApp",
+              "vnetNumber": 1,
+              "ventNetworkOctet": "243",
+              "network": "10.243.32.0/20"
+            },
+            {
+              "region": "Vir",
+              "locationName": "usgovvirginia",
+              "networkName": "DemoApp",
+              "vnetNumber": 1,
+              "ventNetworkOctet": "242",
+              "network": "10.242.32.0/20"
+            }
+          ]
+        },
+        "subnetNames": {
+          "value": [
+            {
+              "name": "Enterprise-Apps-1",
+              "networkCIDR": ".32.64/27"
+            },
+            {
+              "name": "Enterprise-Apps-2",
+              "networkCIDR": ".32.96/27"
+            },
+            {
+              "name": "Enterprise-Apps-3",
+              "networkCIDR": ".32.128/27"
+            }
+          ]
+        },
+        "peeringList": {
+          "value": [
+            {
+              "destinationPeeringName": "AZG-Az-ProdInfra1-Vnet1",
+              "destinationSubscriptionID": "33311ae3-c376-41a8-ad29-3599a4433e50",
+              "destinationResourceGroup": "AZG-Prod-Network-RG"
+            },
+            {
+              "destinationPeeringName": "AZG-Vir-ProdInfra1-Vnet1",
+              "destinationSubscriptionID": "33311ae3-c376-41a8-ad29-3599a4433e50",
+              "destinationResourceGroup": "AZG-Prod-Network-RG"
+            }
+          ]
+        },
+        "securityPeeringList": {
+          "value": [
+            {
+              "destinationPeeringName": "AZG-Az-ProdSec1-Vnet1",
+              "destinationSubscriptionID": "597a28c7-ae6d-4c9f-9167-9b87cef863e0",
+              "destinationResourceGroup": "AZG-Prod-Network-RG"
+            },
+            {
+              "destinationPeeringName": "AZG-Vir-ProdSec1-Vnet1",
+              "destinationSubscriptionID": "597a28c7-ae6d-4c9f-9167-9b87cef863e0",
+              "destinationResourceGroup": "AZG-Prod-Network-RG"
+            }
+          ]
+        },
+        "environmentName": { "value": "[parameters('environmentName')]" }
       },
-      "subnetNames": {
-        "value": [
-          {
-            "name": "Enterprise-Apps-1",
-            "networkCIDR": ".32.64/27"
-          },
-          {
-            "name": "Enterprise-Apps-2",
-            "networkCIDR": ".32.96/27"
-          },
-          {
-            "name": "Enterprise-Apps-3",
-            "networkCIDR": ".32.128/27"
-          }
-        ]
+      "test": {
+        "vnetNames": {
+          "value": [
+            {
+              "region": "Az",
+              "locationName": "usgovarizona",
+              "networkName": "DemoApp",
+              "vnetNumber": 1,
+              "ventNetworkOctet": "243",
+              "network": "10.243.32.0/20"
+            },
+            {
+              "region": "Vir",
+              "locationName": "usgovvirginia",
+              "networkName": "DemoApp",
+              "vnetNumber": 1,
+              "ventNetworkOctet": "242",
+              "network": "10.242.32.0/20"
+            }
+          ]
+        },
+        "subnetNames": {
+          "value": [
+            {
+              "name": "Enterprise-Apps-1",
+              "networkCIDR": ".32.64/27"
+            },
+            {
+              "name": "Enterprise-Apps-2",
+              "networkCIDR": ".32.96/27"
+            },
+            {
+              "name": "Enterprise-Apps-3",
+              "networkCIDR": ".32.128/27"
+            }
+          ]
+        },
+        "peeringList": {
+          "value": [
+            {
+              "destinationPeeringName": "AZG-Az-ProdInfra1-Vnet1",
+              "destinationSubscriptionID": "33311ae3-c376-41a8-ad29-3599a4433e50",
+              "destinationResourceGroup": "AZG-Prod-Network-RG"
+            },
+            {
+              "destinationPeeringName": "AZG-Vir-ProdInfra1-Vnet1",
+              "destinationSubscriptionID": "33311ae3-c376-41a8-ad29-3599a4433e50",
+              "destinationResourceGroup": "AZG-Prod-Network-RG"
+            }
+          ]
+        },
+        "securityPeeringList": {
+          "value": [
+            {
+              "destinationPeeringName": "AZG-Az-ProdSec1-Vnet1",
+              "destinationSubscriptionID": "597a28c7-ae6d-4c9f-9167-9b87cef863e0",
+              "destinationResourceGroup": "AZG-Prod-Network-RG"
+            },
+            {
+              "destinationPeeringName": "AZG-Vir-ProdSec1-Vnet1",
+              "destinationSubscriptionID": "597a28c7-ae6d-4c9f-9167-9b87cef863e0",
+              "destinationResourceGroup": "AZG-Prod-Network-RG"
+            }
+          ]
+        },
+        "environmentName": { "value": "[parameters('environmentName')]" }
       },
-      "peeringList": {
-        "value": [
-          {
-            "destinationPeeringName": "AZG-Az-ProdInfra1-Vnet1",
-            "destinationSubscriptionID": "33311ae3-c376-41a8-ad29-3599a4433e50",
-            "destinationResourceGroup": "AZG-Prod-Network-RG"
-          },
-          {
-            "destinationPeeringName": "AZG-Vir-ProdInfra1-Vnet1",
-            "destinationSubscriptionID": "33311ae3-c376-41a8-ad29-3599a4433e50",
-            "destinationResourceGroup": "AZG-Prod-Network-RG"
-          }
-        ]
-      },
-      "securityPeeringList": {
-        "value": [
-          {
-            "destinationPeeringName": "AZG-Az-ProdSec1-Vnet1",
-            "destinationSubscriptionID": "597a28c7-ae6d-4c9f-9167-9b87cef863e0",
-            "destinationResourceGroup": "AZG-Prod-Network-RG"
-          },
-          {
-            "destinationPeeringName": "AZG-Vir-ProdSec1-Vnet1",
-            "destinationSubscriptionID": "597a28c7-ae6d-4c9f-9167-9b87cef863e0",
-            "destinationResourceGroup": "AZG-Prod-Network-RG"
-          }
-        ]
-      },
-      "environmentName": { "value": "[parameters('environmentName')]" }
-    },
-    "test": {
-      "vnetNames": {
-        "value": [
-          {
-            "region": "Az",
-            "locationName": "usgovarizona",
-            "networkName": "DemoApp",
-            "vnetNumber": 1,
-            "ventNetworkOctet": "243",
-            "network": "10.243.32.0/20"
-          },
-          {
-            "region": "Vir",
-            "locationName": "usgovvirginia",
-            "networkName": "DemoApp",
-            "vnetNumber": 1,
-            "ventNetworkOctet": "242",
-            "network": "10.242.32.0/20"
-          }
-        ]
-      },
-      "subnetNames": {
-        "value": [
-          {
-            "name": "Enterprise-Apps-1",
-            "networkCIDR": ".32.64/27"
-          },
-          {
-            "name": "Enterprise-Apps-2",
-            "networkCIDR": ".32.96/27"
-          },
-          {
-            "name": "Enterprise-Apps-3",
-            "networkCIDR": ".32.128/27"
-          }
-        ]
-      },
-      "peeringList": {
-        "value": [
-          {
-            "destinationPeeringName": "AZG-Az-ProdInfra1-Vnet1",
-            "destinationSubscriptionID": "33311ae3-c376-41a8-ad29-3599a4433e50",
-            "destinationResourceGroup": "AZG-Prod-Network-RG"
-          },
-          {
-            "destinationPeeringName": "AZG-Vir-ProdInfra1-Vnet1",
-            "destinationSubscriptionID": "33311ae3-c376-41a8-ad29-3599a4433e50",
-            "destinationResourceGroup": "AZG-Prod-Network-RG"
-          }
-        ]
-      },
-      "securityPeeringList": {
-        "value": [
-          {
-            "destinationPeeringName": "AZG-Az-ProdSec1-Vnet1",
-            "destinationSubscriptionID": "597a28c7-ae6d-4c9f-9167-9b87cef863e0",
-            "destinationResourceGroup": "AZG-Prod-Network-RG"
-          },
-          {
-            "destinationPeeringName": "AZG-Vir-ProdSec1-Vnet1",
-            "destinationSubscriptionID": "597a28c7-ae6d-4c9f-9167-9b87cef863e0",
-            "destinationResourceGroup": "AZG-Prod-Network-RG"
-          }
-        ]
-      },
-      "environmentName": { "value": "[parameters('environmentName')]" }
-    },
-    "parametersNetwork": {
-      "networkReference": "[variables(parameters('environmentName'))]"
-    }
-  },
+      "parametersNetwork": {
+        "networkReference": "[variables(parameters('environmentName'))]"
+      }
     },
     "resources": [
       {
