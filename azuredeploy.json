@@ -176,9 +176,7 @@
         },
         "environmentName": { "value": "[parameters('environmentName')]" }
       },
-      "parametersNetwork": {
-        "networkReference": "[variables(parameters('environmentName'))]"
-      }
+      "parametersNetwork":  "[variables(parameters('environmentName'))]"
     },
     "resources": [
       {
