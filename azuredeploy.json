@@ -46,7 +46,7 @@
           "value": [
             {
               "region": "Az",
-              "locationName": "usgovarizona",
+              "locationName": "westus2",
               "networkName": "DemoApp",
               "vnetNumber": 1,
               "ventNetworkOctet": "243",
@@ -54,7 +54,7 @@
             },
             {
               "region": "Vir",
-              "locationName": "usgovvirginia",
+              "locationName": "eastus",
               "networkName": "DemoApp",
               "vnetNumber": 1,
               "ventNetworkOctet": "242",
@@ -113,7 +113,7 @@
           "value": [
             {
               "region": "Az",
-              "locationName": "usgovarizona",
+              "locationName": "westus2",
               "networkName": "DemoApp",
               "vnetNumber": 1,
               "ventNetworkOctet": "243",
@@ -121,7 +121,7 @@
             },
             {
               "region": "Vir",
-              "locationName": "usgovvirginia",
+              "locationName": "eastus",
               "networkName": "DemoApp",
               "vnetNumber": 1,
               "ventNetworkOctet": "242",
