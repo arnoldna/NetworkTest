@@ -106,7 +106,8 @@
               "destinationResourceGroup": "AZG-Prod-Network-RG"
             }
           ]
-        }
+        },
+        "environmentName": { "value": "prod" }
       },
       "test": {
         "vnetNames": {
@@ -172,7 +173,8 @@
               "destinationResourceGroup": "AZG-Prod-Network-RG"
             }
           ]
-        }
+        },
+        "environmentName": { "value": "test" }
       },
       "parametersNetwork":  "[variables(parameters('environmentName'))]"
     },
